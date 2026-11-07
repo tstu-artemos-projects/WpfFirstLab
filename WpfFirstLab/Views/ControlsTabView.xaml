@@ -3,11 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:WpfFirstLab">
     <UserControl.Resources>
-
-        <!-- Каждый шаблон выводит набор элементов для одной цветовой роли.
-             Цвет роли задаётся контейнеру через Ui.Brush и наследуется вложенными элементами. -->
-
-        <!-- 1. Кнопки -->
         <DataTemplate x:Key="ButtonsTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <StackPanel>
@@ -53,7 +48,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 2. ListBox, ComboBox, TextBox, PasswordBox, RichTextBox -->
         <DataTemplate x:Key="InputsTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <Grid>
@@ -113,7 +107,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 3. TextBlock и Label -->
         <DataTemplate x:Key="TextTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <Grid>
@@ -143,7 +136,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 4. TreeView -->
         <DataTemplate x:Key="TreeTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
@@ -169,7 +161,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 5. DataGrid -->
         <DataTemplate x:Key="GridTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <DataGrid Style="{StaticResource ColorDataGrid}"
@@ -185,7 +176,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 6. ProgressBar -->
         <DataTemplate x:Key="ProgressTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <StackPanel>
@@ -199,7 +189,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 7. Всплывающие подсказки -->
         <DataTemplate x:Key="ToolTipsTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
@@ -228,7 +217,6 @@
             </GroupBox>
         </DataTemplate>
 
-        <!-- 8. Меню и контекстное меню -->
         <DataTemplate x:Key="MenusTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
                 <StackPanel>

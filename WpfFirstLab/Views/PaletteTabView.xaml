@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:WpfFirstLab">
     <UserControl.Resources>
 
-        <!-- Карточка цвета: заливка, название, HEX и RGB -->
         <DataTemplate x:Key="SwatchTemplate">
             <Border Width="190" Height="96" Margin="0,0,12,8" Padding="12" CornerRadius="8"
                     Background="{Binding Brush}">
@@ -16,7 +15,6 @@
             </Border>
         </DataTemplate>
 
-        <!-- Таблица оттенков одного цвета -->
         <DataTemplate x:Key="ShadesTemplate">
             <Expander Header="{Binding TableTitle}" Margin="0,0,0,6"
                       local:Ui.Brush="{Binding Brush}">

@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:WpfFirstLab">
 
-    <!-- ===== Кисти темы (значения совпадают с оттенком 600 в Palette.cs) ===== -->
+    <!-- Кисти темы -->
     <SolidColorBrush x:Key="TextBrush" Color="#1F2937"/>
     <SolidColorBrush x:Key="MutedBrush" Color="#6B7280"/>
     <SolidColorBrush x:Key="LineBrush" Color="#D1D5DB"/>
@@ -12,7 +12,7 @@
     <SolidColorBrush x:Key="ErrorBrush" Color="#DC2626"/>
     <SolidColorBrush x:Key="InfoBrush" Color="#0891B2"/>
 
-    <!-- ===== Типографика ===== -->
+    <!-- Типографика -->
     <Style x:Key="H1" TargetType="TextBlock">
         <Setter Property="FontSize" Value="28"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -39,7 +39,7 @@
         <Setter Property="Margin" Value="0,4,0,4"/>
     </Style>
 
-    <!-- ===== Кнопки и переключатели ===== -->
+    <!-- Кнопки и переключатели -->
     <ControlTemplate x:Key="ColorButtonTemplate" TargetType="ButtonBase">
         <Grid x:Name="Root" SnapsToDevicePixels="True">
             <!-- Заливка: непрозрачность задаёт вариант (основная/вторичная/третичная) -->
@@ -124,7 +124,7 @@
         <Setter Property="VerticalAlignment" Value="Center"/>
     </Style>
 
-    <!-- ===== Поля ввода: TextBox, PasswordBox, RichTextBox ===== -->
+    <!-- Поля ввода: TextBox, PasswordBox, RichTextBox -->
     <ControlTemplate x:Key="ColorInputTemplate" TargetType="Control">
         <Border x:Name="Bd" CornerRadius="6" SnapsToDevicePixels="True"
                 Background="{TemplateBinding Background}"
@@ -202,7 +202,7 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource ColorListBoxItem}"/>
     </Style>
 
-    <!-- ===== TreeView ===== -->
+    <!-- TreeView -->
     <Style x:Key="TreeExpanderToggle" TargetType="ToggleButton">
         <Setter Property="Focusable" Value="False"/>
         <Setter Property="Template">
@@ -278,7 +278,7 @@
         </Style.Resources>
     </Style>
 
-    <!-- ===== DataGrid ===== -->
+    <!-- DataGrid -->
     <Style x:Key="ColorDataGrid" TargetType="DataGrid">
         <Setter Property="AutoGenerateColumns" Value="False"/>
         <Setter Property="CanUserAddRows" Value="False"/>
@@ -303,7 +303,7 @@
         </Setter>
     </Style>
 
-    <!-- ===== ProgressBar ===== -->
+    <!-- ProgressBar -->
     <Style x:Key="ColorProgressBar" TargetType="ProgressBar">
         <Setter Property="Height" Value="8"/>
         <Setter Property="Margin" Value="0,4,0,8"/>
@@ -312,7 +312,7 @@
         <Setter Property="Foreground" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
     </Style>
 
-    <!-- ===== Всплывающая подсказка ===== -->
+    <!-- Всплывающая подсказка -->
     <Style x:Key="ColorToolTip" TargetType="ToolTip">
         <Setter Property="Background" Value="{Binding PlacementTarget.(local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
         <Setter Property="Foreground" Value="White"/>

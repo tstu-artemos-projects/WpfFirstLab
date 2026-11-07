@@ -4,7 +4,6 @@
              xmlns:local="clr-namespace:WpfFirstLab">
     <UserControl.Resources>
 
-        <!-- Окрашенный прямоугольник-образец -->
         <Style x:Key="Tile" TargetType="Label">
             <Setter Property="Margin" Value="3"/>
             <Setter Property="Foreground" Value="White"/>

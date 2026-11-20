@@ -1,14 +1,13 @@
 <UserControl x:Class="WpfFirstLab.CommonTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfFirstLab"
-             xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- DataContext — SettingsViewModel -->
     <StackPanel Margin="16">
 
-        <GroupBox Header="Персонализация" Padding="12" Margin="0,0,0,12">
+        <GroupBox Header="{Binding [GroupPersonalization], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -16,27 +15,22 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Тема приложения:" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left"
-                          Margin="0,0,0,8" SelectedIndex="0">
-                    <ComboBoxItem Content="Светлая"/>
-                    <ComboBoxItem Content="Тёмная"/>
-                    <ComboBoxItem Content="Системная"/>
-                </ComboBox>
+                <Label Grid.Row="0" Content="{Binding [LabelTheme], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
+                          ItemsSource="{Binding Themes}" DisplayMemberPath="Name"
+                          SelectedItem="{Binding SelectedTheme}"/>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Язык приложения:" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" Width="240" HorizontalAlignment="Left" SelectedIndex="0">
-                    <ComboBoxItem Content="Русский"/>
-                    <ComboBoxItem Content="English"/>
-                    <ComboBoxItem Content="Deutsch"/>
-                </ComboBox>
+                <Label Grid.Row="1" Content="{Binding [LabelLanguage], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="1" Grid.Column="1" Width="240" HorizontalAlignment="Left"
+                          ItemsSource="{Binding Languages}" DisplayMemberPath="NativeName"
+                          SelectedItem="{Binding SelectedLanguage}"/>
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="Шрифты" Padding="12">
+        <GroupBox Header="{Binding [GroupFonts], Source={StaticResource Loc}}" Padding="12">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="180"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -44,22 +38,23 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Шрифт приложения:" VerticalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left"
-                          Margin="0,0,0,8" SelectedIndex="0">
-                    <ComboBoxItem Content="Segoe UI" FontFamily="Segoe UI"/>
-                    <ComboBoxItem Content="Arial" FontFamily="Arial"/>
-                    <ComboBoxItem Content="Times New Roman" FontFamily="Times New Roman"/>
-                    <ComboBoxItem Content="Consolas" FontFamily="Consolas"/>
+                <Label Grid.Row="0" Content="{Binding [LabelFont], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
+                          ItemsSource="{Binding Fonts}" SelectedItem="{Binding SelectedFont}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" FontFamily="{Binding}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Размер шрифта:" VerticalAlignment="Center"/>
+                <Label Grid.Row="1" Content="{Binding [LabelFontSize], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
-                    <Slider x:Name="FontSizeSlider" Width="260" Minimum="8" Maximum="32" Value="14"
-                            TickFrequency="2" TickPlacement="BottomRight" IsSnapToTickEnabled="True"
-                            VerticalAlignment="Center"/>
+                    <Slider Width="260" Minimum="8" Maximum="32" TickFrequency="2" TickPlacement="BottomRight"
+                            IsSnapToTickEnabled="True" VerticalAlignment="Center"
+                            Value="{Binding FontSize}"/>
                     <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" MinWidth="48"
-                               Text="{Binding Value, ElementName=FontSizeSlider, StringFormat={}{0:0} pt}"/>
+                               Text="{Binding FontSize, StringFormat={}{0:0} pt}"/>
                 </StackPanel>
             </Grid>
         </GroupBox>

@@ -1,0 +1,130 @@
+<UserControl x:Class="WpfFirstLab.TableTabView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:vm="clr-namespace:WpfFirstLab.ViewModels"
+             xmlns:b="clr-namespace:WpfFirstLab.Behaviors"
+             xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
+    <!-- DataContext — TableViewModel. Все действия выполняются командами, code-behind пуст. -->
+    <DockPanel Margin="16">
+
+        <ToolBar DockPanel.Dock="Top" Margin="0,0,0,8">
+            <Button Command="{Binding AddCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding [Add], Source={StaticResource Loc}}"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding UpdateCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding [Update], Source={StaticResource Loc}}"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding DeleteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding [Delete], Source={StaticResource Loc}}"/>
+                </StackPanel>
+            </Button>
+            <Separator/>
+            <Button Command="{Binding CopyCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding [Copy], Source={StaticResource Loc}}"/>
+                </StackPanel>
+            </Button>
+            <Button Command="{Binding PasteCommand}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;" VerticalAlignment="Center"/>
+                    <TextBlock Margin="6,0,0,0" Text="{Binding [Paste], Source={StaticResource Loc}}"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+
+        <TextBlock DockPanel.Dock="Top" Style="{StaticResource Caption}" Margin="0,0,0,8"
+                   Text="{Binding [TableHint], Source={StaticResource Loc}}"/>
+
+        <!-- Форма редактирования записи: заполнение, изменение -->
+        <GroupBox DockPanel.Dock="Bottom" Padding="10" Margin="0,8,0,0"
+                  Header="{Binding [GroupEditor], Source={StaticResource Loc}}">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="2*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="90"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0" Content="{Binding [FieldName], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="1" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                         Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Column="2" Content="{Binding [FieldGroup], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="3" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                         Text="{Binding EditGroup, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Column="4" Content="{Binding [FieldScore], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <TextBox Grid.Column="5" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                         Text="{Binding EditScore, UpdateSourceTrigger=PropertyChanged}"/>
+                <StackPanel Grid.Column="6" Orientation="Horizontal">
+                    <Button Style="{StaticResource PrimaryButton}" Command="{Binding AddCommand}"
+                            Content="{Binding [Add], Source={StaticResource Loc}}" Margin="0,0,8,0"/>
+                    <Button Style="{StaticResource SecondaryButton}" Command="{Binding UpdateCommand}"
+                            Content="{Binding [Update], Source={StaticResource Loc}}" Margin="0"/>
+                </StackPanel>
+            </Grid>
+        </GroupBox>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="12"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <GroupBox Grid.Column="0" Padding="6">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding [TableSource], Source={StaticResource Loc}}"/>
+                        <TextBlock Margin="8,0,0,0" Foreground="{StaticResource PrimaryBrush}"
+                                   Text="{Binding [Active], Source={StaticResource Loc}}"
+                                   Visibility="{Binding IsLeftActive, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
+                </GroupBox.Header>
+                <DataGrid Style="{StaticResource ColorDataGrid}" IsReadOnly="False" SelectionMode="Single"
+                          ItemsSource="{Binding Left}" SelectedItem="{Binding SelectedLeft, Mode=TwoWay}"
+                          b:FocusBehavior.Command="{Binding ActivateCommand}"
+                          b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Left}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
+                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="130" Binding="{Binding Group}"/>
+                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="60" Binding="{Binding Score}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+
+            <GroupBox Grid.Column="2" Padding="6">
+                <GroupBox.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding [TableTarget], Source={StaticResource Loc}}"/>
+                        <TextBlock Margin="8,0,0,0" Foreground="{StaticResource PrimaryBrush}"
+                                   Text="{Binding [Active], Source={StaticResource Loc}}"
+                                   Visibility="{Binding IsRightActive, Converter={StaticResource BoolToVis}}"/>
+                    </StackPanel>
+                </GroupBox.Header>
+                <DataGrid Style="{StaticResource ColorDataGrid}" IsReadOnly="False" SelectionMode="Single"
+                          ItemsSource="{Binding Right}" SelectedItem="{Binding SelectedRight, Mode=TwoWay}"
+                          b:FocusBehavior.Command="{Binding ActivateCommand}"
+                          b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Right}">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
+                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="130" Binding="{Binding Group}"/>
+                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="60" Binding="{Binding Score}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</UserControl>

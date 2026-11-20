@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
@@ -6,6 +6,12 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <!-- Application.ThemeMode (тема Fluent) помечен в WPF как экспериментальный API -->
+        <NoWarn>$(NoWarn);WPF0001</NoWarn>
     </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\WpfFirstLab.Resources\WpfFirstLab.Resources.csproj" />
+    </ItemGroup>
 
 </Project>

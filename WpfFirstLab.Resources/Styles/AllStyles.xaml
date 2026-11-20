@@ -1,0 +1,11 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Единая точка подключения библиотеки ресурсов -->
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/WpfFirstLab.Resources;component/Styles/Brushes.xaml"/>
+        <ResourceDictionary Source="/WpfFirstLab.Resources;component/Styles/Typography.xaml"/>
+        <ResourceDictionary Source="/WpfFirstLab.Resources;component/Styles/Buttons.xaml"/>
+        <ResourceDictionary Source="/WpfFirstLab.Resources;component/Styles/Inputs.xaml"/>
+        <ResourceDictionary Source="/WpfFirstLab.Resources;component/Styles/Collections.xaml"/>
+    </ResourceDictionary.MergedDictionaries>
+</ResourceDictionary>

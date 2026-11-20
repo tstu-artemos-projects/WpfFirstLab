@@ -1,10 +1,11 @@
 <UserControl x:Class="WpfFirstLab.ControlsTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfFirstLab">
+             xmlns:local="clr-namespace:WpfFirstLab"
+             xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
     <UserControl.Resources>
         <DataTemplate x:Key="ButtonsTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
                     <TextBlock Text="Обычные кнопки: основная, вторичная, третичная (наведение и нажатие — мышью)" Style="{StaticResource Caption}"/>
                     <WrapPanel>
@@ -49,7 +50,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="InputsTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -108,7 +109,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="TextTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -130,14 +131,14 @@
                         <Label Content="Заголовок 2" FontSize="22" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
                         <Label Content="Заголовок 3" FontSize="18" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
                         <Label Content="Обычный текст абзаца." FontSize="14" Padding="0,2"/>
-                        <Label Content="Подпись к элементу" FontSize="12" Foreground="{StaticResource MutedBrush}" Padding="0"/>
+                        <Label Content="Подпись к элементу" FontSize="12" Foreground="{DynamicResource MutedBrush}" Padding="0"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
         </DataTemplate>
 
         <DataTemplate x:Key="TreeTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
                     <TreeView Style="{StaticResource ColorTreeView}" Width="260" Height="150" Margin="0,0,12,0">
                         <TreeViewItem Header="Проект" IsExpanded="True">
@@ -162,7 +163,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="GridTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <DataGrid Style="{StaticResource ColorDataGrid}"
                           ItemsSource="{x:Static local:SampleData.Students}"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -177,7 +178,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ProgressTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
                     <TextBlock Text="Определённый прогресс (70 %)" Style="{StaticResource Caption}"/>
                     <ProgressBar Style="{StaticResource ColorProgressBar}" Value="70" Maximum="100"/>
@@ -190,7 +191,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="ToolTipsTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
                     <Button Style="{StaticResource PrimaryButton}" Content="Простая подсказка">
                         <Button.ToolTip>
@@ -218,7 +219,7 @@
         </DataTemplate>
 
         <DataTemplate x:Key="MenusTemplate">
-            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" local:Ui.Brush="{Binding Brush}">
+            <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
                     <TextBlock Text="Меню" Style="{StaticResource Caption}"/>
                     <Menu Background="{Binding LightBrush}" Foreground="{Binding DarkBrush}" Margin="0,0,0,8">
@@ -263,46 +264,46 @@
 
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" local:Ui.ForwardWheel="True">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" res:Ui.ForwardWheel="True">
         <StackPanel Margin="16">
 
             <Expander Header="1. Кнопки" IsExpanded="True" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ButtonsTemplate}"/>
             </Expander>
 
             <Expander Header="2. ListBox, ComboBox, TextBox, PasswordBox, RichTextBox" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource InputsTemplate}"/>
             </Expander>
 
             <Expander Header="3. TextBlock и Label" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource TextTemplate}"/>
             </Expander>
 
             <Expander Header="4. TreeView" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource TreeTemplate}"/>
             </Expander>
 
             <Expander Header="5. DataGrid" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource GridTemplate}"/>
             </Expander>
 
             <Expander Header="6. ProgressBar" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ProgressTemplate}"/>
             </Expander>
 
             <Expander Header="7. Всплывающие подсказки" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ToolTipsTemplate}"/>
             </Expander>
 
             <Expander Header="8. Меню и контекстное меню" Margin="0,0,0,8">
-                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource MenusTemplate}"/>
             </Expander>
 

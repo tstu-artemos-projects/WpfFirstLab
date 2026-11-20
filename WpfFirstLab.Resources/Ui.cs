@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 
-namespace WpfFirstLab;
+namespace WpfFirstLab.Resources;
 
 /// <summary>
 /// Присоединяемые свойства для раскраски элементов управления.

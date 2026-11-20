@@ -1,9 +1,7 @@
+using WpfFirstLab.Models;
+
 namespace WpfFirstLab;
 
-/// <summary>Строка демонстрационной таблицы DataGrid.</summary>
-public sealed record Student(int Id, string Name, string Group, double Score);
-
-/// <summary>Статические данные для демонстрации элементов управления.</summary>
 public static class SampleData
 {
     public static IReadOnlyList<Student> Students { get; } = new[]

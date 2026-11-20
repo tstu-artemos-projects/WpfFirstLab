@@ -1,6 +1,6 @@
 using System.Windows.Media;
 
-namespace WpfFirstLab;
+namespace WpfFirstLab.Resources;
 
 /// <summary>Один оттенок цвета в палитре (строка таблицы).</summary>
 public sealed record ColorShade(string Name, string Hex, string Rgb, Brush Brush);

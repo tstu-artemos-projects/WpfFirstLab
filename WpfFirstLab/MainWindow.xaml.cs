@@ -1,23 +1,15 @@
-﻿using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using WpfFirstLab.Services;
+using WpfFirstLab.ViewModels;
 
 namespace WpfFirstLab;
 
-/// <summary>
-/// Interaction logic for MainWindow.xaml
-/// </summary>
 public partial class MainWindow : Window
 {
     public MainWindow()
     {
         InitializeComponent();
+        // Единственное место, где связываются представление и модель; сервисы передаются снаружи.
+        DataContext = new MainViewModel(new ThemeService());
     }
 }

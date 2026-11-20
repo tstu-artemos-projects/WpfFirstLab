@@ -1,0 +1,8 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Тема: Light. Ключи общие для всех тем, значения подменяются при смене темы. -->
+    <SolidColorBrush x:Key="TextBrush" Color="#1F2937"/>
+    <SolidColorBrush x:Key="MutedBrush" Color="#6B7280"/>
+    <SolidColorBrush x:Key="LineBrush" Color="#D1D5DB"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush" Color="#FFFFFF"/>
+</ResourceDictionary>

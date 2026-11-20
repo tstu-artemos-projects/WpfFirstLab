@@ -1,7 +1,8 @@
 <UserControl x:Class="WpfFirstLab.PaletteTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfFirstLab">
+             xmlns:local="clr-namespace:WpfFirstLab"
+             xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
     <UserControl.Resources>
 
         <DataTemplate x:Key="SwatchTemplate">
@@ -17,7 +18,7 @@
 
         <DataTemplate x:Key="ShadesTemplate">
             <Expander Header="{Binding TableTitle}" Margin="0,0,0,6"
-                      local:Ui.Brush="{Binding Brush}">
+                      res:Ui.Brush="{Binding Brush}">
                 <DataGrid Style="{StaticResource ColorDataGrid}" Margin="0,6,0,6"
                           ItemsSource="{Binding Shades}"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
@@ -40,16 +41,16 @@
 
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" local:Ui.ForwardWheel="True">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" res:Ui.ForwardWheel="True">
         <StackPanel Margin="16">
 
             <TextBlock FontSize="18" Margin="0,0,0,12">
                 <Run Text="Текущая тема приложения: "/>
-                <Run Text="{x:Static local:Palette.ThemeName}" FontWeight="Bold"/>
+                <Run Text="{x:Static res:Palette.ThemeName}" FontWeight="Bold"/>
             </TextBlock>
 
             <GroupBox Header="Основные цвета" Padding="12" Margin="0,0,0,12">
-                <ItemsControl ItemsSource="{x:Static local:Palette.BaseRoles}"
+                <ItemsControl ItemsSource="{x:Static res:Palette.BaseRoles}"
                               ItemTemplate="{StaticResource SwatchTemplate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -60,7 +61,7 @@
             </GroupBox>
 
             <GroupBox Header="Индикаторные цвета" Padding="12" Margin="0,0,0,12">
-                <ItemsControl ItemsSource="{x:Static local:Palette.StatusRoles}"
+                <ItemsControl ItemsSource="{x:Static res:Palette.StatusRoles}"
                               ItemTemplate="{StaticResource SwatchTemplate}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -71,7 +72,7 @@
             </GroupBox>
 
             <GroupBox Header="Оттенки цветов (10 оттенков для каждого цвета)" Padding="12">
-                <ItemsControl ItemsSource="{x:Static local:Palette.Roles}"
+                <ItemsControl ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ShadesTemplate}"/>
             </GroupBox>
 

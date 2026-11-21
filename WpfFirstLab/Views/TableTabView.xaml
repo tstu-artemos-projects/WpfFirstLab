@@ -82,7 +82,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <GroupBox Grid.Column="0" Padding="6">
+            <GroupBox Grid.Column="0" Padding="6"
+                      b:FocusBehavior.Command="{Binding ActivateCommand}"
+                      b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Left}">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding [TableSource], Source={StaticResource Loc}}"/>
@@ -92,9 +94,7 @@
                     </StackPanel>
                 </GroupBox.Header>
                 <DataGrid Style="{StaticResource ColorDataGrid}" IsReadOnly="False" SelectionMode="Single"
-                          ItemsSource="{Binding Left}" SelectedItem="{Binding SelectedLeft, Mode=TwoWay}"
-                          b:FocusBehavior.Command="{Binding ActivateCommand}"
-                          b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Left}">
+                          ItemsSource="{Binding Left}" SelectedItem="{Binding SelectedLeft, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
                         <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
@@ -104,7 +104,9 @@
                 </DataGrid>
             </GroupBox>
 
-            <GroupBox Grid.Column="2" Padding="6">
+            <GroupBox Grid.Column="2" Padding="6"
+                      b:FocusBehavior.Command="{Binding ActivateCommand}"
+                      b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Right}">
                 <GroupBox.Header>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding [TableTarget], Source={StaticResource Loc}}"/>
@@ -114,9 +116,7 @@
                     </StackPanel>
                 </GroupBox.Header>
                 <DataGrid Style="{StaticResource ColorDataGrid}" IsReadOnly="False" SelectionMode="Single"
-                          ItemsSource="{Binding Right}" SelectedItem="{Binding SelectedRight, Mode=TwoWay}"
-                          b:FocusBehavior.Command="{Binding ActivateCommand}"
-                          b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Right}">
+                          ItemsSource="{Binding Right}" SelectedItem="{Binding SelectedRight, Mode=TwoWay}">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
                         <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>

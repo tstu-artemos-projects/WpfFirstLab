@@ -4,8 +4,10 @@ using System.Windows.Input;
 namespace WpfFirstLab.Behaviors;
 
 /// <summary>
-/// Выполняет команду, когда элемент (или любой его потомок) получает фокус клавиатуры.
-/// Позволяет модели представления узнать, какая таблица активна, без обработчиков в code-behind.
+/// Выполняет команду, когда элемент (или любой его потомок) получает фокус клавиатуры
+/// либо на нём щёлкнули мышью. Щелчок учитывается отдельно, потому что пустая таблица
+/// (без строк и ячеек) фокус не получает. Позволяет модели представления узнать,
+/// какая таблица активна, без обработчиков в code-behind.
 /// </summary>
 public static class FocusBehavior
 {
@@ -26,13 +28,21 @@ public static class FocusBehavior
     {
         if (d is not UIElement element) return;
         element.GotKeyboardFocus -= OnGotKeyboardFocus;
-        if (e.NewValue is not null)
-            element.GotKeyboardFocus += OnGotKeyboardFocus;
+        element.PreviewMouseDown -= OnPreviewMouseDown;
+        if (e.NewValue is null) return;
+
+        element.GotKeyboardFocus += OnGotKeyboardFocus;
+        element.PreviewMouseDown += OnPreviewMouseDown;
     }
 
-    private static void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+    private static void OnGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e) =>
+        Run((DependencyObject)sender);
+
+    private static void OnPreviewMouseDown(object sender, MouseButtonEventArgs e) =>
+        Run((DependencyObject)sender);
+
+    private static void Run(DependencyObject element)
     {
-        var element = (DependencyObject)sender;
         var command = GetCommand(element);
         var parameter = GetCommandParameter(element);
         if (command?.CanExecute(parameter) == true)

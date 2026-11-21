@@ -21,6 +21,7 @@ public sealed class TableViewModel : ViewModelBase
     private string _editGroup = string.Empty;
     private double _editScore = 4;
     private Student? _buffer;   // содержимое буфера обмена приложения
+    private TableSide _bufferSource;   // таблица, из которой запись была скопирована
 
     public TableViewModel()
     {
@@ -128,12 +129,22 @@ public sealed class TableViewModel : ViewModelBase
 
     private void Copy()
     {
-        if (ActiveSelected is { } s) _buffer = s.Clone(0);
+        if (ActiveSelected is not { } s) return;
+        _buffer = s.Clone(0);
+        _bufferSource = _activeSide;
     }
 
+    // Запись вставляется в таблицу, отличную от той, откуда её скопировали («из одной таблицы в другую»).
+    // Если пользователь щёлкнул по другой таблице, она и становится целью; иначе целью служит вторая таблица.
     private void Paste()
     {
         if (_buffer is null) return;
+
+        var target = _activeSide != _bufferSource
+            ? _activeSide
+            : (_bufferSource == TableSide.Left ? TableSide.Right : TableSide.Left);
+
+        ActiveSide = target;
         var item = _buffer.Clone(_nextId++);
         ActiveTable.Add(item);
         Select(item);

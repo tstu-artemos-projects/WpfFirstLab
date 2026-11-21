@@ -1,6 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
+                    xmlns:local="clr-namespace:WpfFirstLab.Resources"
+                    xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
     <ControlTemplate x:Key="ColorInputTemplate" TargetType="Control">
         <Border x:Name="Bd" CornerRadius="6" SnapsToDevicePixels="True"
                 Background="{TemplateBinding Background}"
@@ -25,8 +26,8 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-        <Setter Property="BorderBrush" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
-        <Setter Property="CaretBrush" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="BorderBrush" Value="{Binding (res:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="CaretBrush" Value="{Binding (res:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
     </Style>
 
     <Style x:Key="ColorPasswordBox" TargetType="PasswordBox">
@@ -36,7 +37,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-        <Setter Property="BorderBrush" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="BorderBrush" Value="{Binding (res:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
     </Style>
 
     <Style x:Key="ColorRichTextBox" TargetType="RichTextBox">
@@ -45,8 +46,8 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="Background" Value="{DynamicResource InputBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBrush}"/>
-        <Setter Property="BorderBrush" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
-        <Setter Property="CaretBrush" Value="{Binding (local:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="BorderBrush" Value="{Binding (res:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
+        <Setter Property="CaretBrush" Value="{Binding (res:Ui.Brush), RelativeSource={RelativeSource Self}}"/>
     </Style>
 
 </ResourceDictionary>

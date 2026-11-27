@@ -17,11 +17,8 @@ public sealed class TableViewModel : ViewModelBase
     private Student? _selectedLeft;
     private Student? _selectedRight;
     private TableSide _activeSide = TableSide.Left;
-    private string _editName = string.Empty;
-    private string _editGroup = string.Empty;
-    private double _editScore = 4;
-    private Student? _buffer;   // содержимое буфера обмена приложения
-    private TableSide _bufferSource;   // таблица, из которой запись была скопирована
+    private Student? _buffer;
+    private TableSide _bufferSource;
 
     public TableViewModel()
     {
@@ -84,9 +81,23 @@ public sealed class TableViewModel : ViewModelBase
     private Student? ActiveSelected => _activeSide == TableSide.Left ? _selectedLeft : _selectedRight;
 
     // Поля формы
-    public string EditName { get => _editName; set => SetProperty(ref _editName, value); }
-    public string EditGroup { get => _editGroup; set => SetProperty(ref _editGroup, value); }
-    public double EditScore { get => _editScore; set => SetProperty(ref _editScore, value); }
+    public string EditName
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public string EditGroup
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = string.Empty;
+
+    public double EditScore
+    {
+        get;
+        set => SetProperty(ref field, value);
+    } = 4;
 
     public ICommand AddCommand { get; }
     public ICommand UpdateCommand { get; }

@@ -5,20 +5,12 @@ using WpfFirstLab.Services;
 namespace WpfFirstLab.ViewModels;
 
 /// <summary>Элемент списка с названием, зависящим от языка: название перечитывается при смене языка.</summary>
-public sealed class LocalizedItem<T> : ViewModelBase
+public sealed class LocalizedItem<T>(T value, string key) : ViewModelBase
 {
-    private readonly string _key;
-
-    public LocalizedItem(T value, string key)
-    {
-        Value = value;
-        _key = key;
-    }
-
-    public T Value { get; }
+    public T Value { get; } = value;
 
     /// <summary>Название на текущем языке (Loc.Tr из CodingSeb.Localization).</summary>
-    public string Name => Loc.Tr(_key, _key);
+    public string Name => Loc.Tr(key, key);
 
     /// <summary>Перечитывает название после смены языка.</summary>
     public void Refresh() => OnPropertyChanged(nameof(Name));
@@ -33,8 +25,6 @@ public sealed class SettingsViewModel : ViewModelBase
     private readonly IThemeService _themeService;
     private LocalizedItem<AppTheme> _selectedTheme;
     private LanguageOption _selectedLanguage;
-    private string _selectedFont = "Segoe UI";
-    private double _fontSize = 14;
 
     public SettingsViewModel(IThemeService themeService)
     {
@@ -62,7 +52,7 @@ public sealed class SettingsViewModel : ViewModelBase
     public IReadOnlyList<LanguageOption> Languages { get; }
     public IReadOnlyList<string> Fonts { get; }
 
-    public LocalizedItem<AppTheme> SelectedTheme
+    public LocalizedItem<AppTheme>? SelectedTheme
     {
         get => _selectedTheme;
         set
@@ -72,7 +62,7 @@ public sealed class SettingsViewModel : ViewModelBase
         }
     }
 
-    public LanguageOption SelectedLanguage
+    public LanguageOption? SelectedLanguage
     {
         get => _selectedLanguage;
         set
@@ -85,13 +75,13 @@ public sealed class SettingsViewModel : ViewModelBase
 
     public string SelectedFont
     {
-        get => _selectedFont;
-        set => SetProperty(ref _selectedFont, value ?? "Segoe UI");
-    }
+        get;
+        set => SetProperty(ref field, value ?? "Segoe UI");
+    } = "Segoe UI";
 
     public double FontSize
     {
-        get => _fontSize;
-        set => SetProperty(ref _fontSize, value);
-    }
+        get;
+        set => SetProperty(ref field, value);
+    } = 14;
 }

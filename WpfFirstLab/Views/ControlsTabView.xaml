@@ -169,9 +169,9 @@
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="№" Width="50" Binding="{Binding Id}"/>
-                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
-                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="160" Binding="{Binding Group}"/>
-                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="80" Binding="{Binding Score}"/>
+                        <DataGridTextColumn Header="{Tr 'ColStudent'}" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Tr 'ColGroup'}" Width="160" Binding="{Binding Group}"/>
+                        <DataGridTextColumn Header="{Tr 'ColScore'}" Width="80" Binding="{Binding Score}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </GroupBox>
@@ -267,42 +267,42 @@
     <ScrollViewer VerticalScrollBarVisibility="Auto" res:Ui.ForwardWheel="True">
         <StackPanel Margin="16">
 
-            <Expander Header="{Binding [ExpButtons], Source={StaticResource Loc}}" IsExpanded="True" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpButtons'}" IsExpanded="True" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ButtonsTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpInputs], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpInputs'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource InputsTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpText], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpText'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource TextTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpTree], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpTree'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource TreeTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpGrid], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpGrid'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource GridTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpProgress], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpProgress'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ProgressTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpToolTips], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpToolTips'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ToolTipsTemplate}"/>
             </Expander>
 
-            <Expander Header="{Binding [ExpMenus], Source={StaticResource Loc}}" Margin="0,0,0,8">
+            <Expander Header="{Tr 'ExpMenus'}" Margin="0,0,0,8">
                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource MenusTemplate}"/>
             </Expander>

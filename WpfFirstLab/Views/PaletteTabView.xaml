@@ -23,7 +23,7 @@
                           ItemsSource="{Binding Shades}"
                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="{Binding [ColColor], Source={StaticResource Loc}}" Width="90">
+                        <DataGridTemplateColumn Header="{Tr 'ColColor'}" Width="90">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border Height="18" Width="56" CornerRadius="4" Margin="4,2"
@@ -31,9 +31,9 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="{Binding [ColRgb], Source={StaticResource Loc}}" Width="160" Binding="{Binding Rgb}"/>
+                        <DataGridTextColumn Header="{Tr 'ColRgb'}" Width="160" Binding="{Binding Rgb}"/>
                         <DataGridTextColumn Header="HEX" Width="120" Binding="{Binding Hex}"/>
-                        <DataGridTextColumn Header="{Binding [ColName], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+                        <DataGridTextColumn Header="{Tr 'ColName'}" Width="*" Binding="{Binding Name}"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Expander>
@@ -45,11 +45,11 @@
         <StackPanel Margin="16">
 
             <TextBlock FontSize="18" Margin="0,0,0,12">
-                <Run Text="{Binding [CurrentTheme], Source={StaticResource Loc}, Mode=OneWay}"/>
+                <Run Text="{Tr 'CurrentTheme'}"/>
                 <Run Text="{Binding SelectedTheme.Name, Mode=OneWay}" FontWeight="Bold"/>
             </TextBlock>
 
-            <GroupBox Header="{Binding [GroupBaseColors], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
+            <GroupBox Header="{Tr 'GroupBaseColors'}" Padding="12" Margin="0,0,0,12">
                 <ItemsControl ItemsSource="{x:Static res:Palette.BaseRoles}"
                               ItemTemplate="{StaticResource SwatchTemplate}">
                     <ItemsControl.ItemsPanel>
@@ -60,7 +60,7 @@
                 </ItemsControl>
             </GroupBox>
 
-            <GroupBox Header="{Binding [GroupStatusColors], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
+            <GroupBox Header="{Tr 'GroupStatusColors'}" Padding="12" Margin="0,0,0,12">
                 <ItemsControl ItemsSource="{x:Static res:Palette.StatusRoles}"
                               ItemTemplate="{StaticResource SwatchTemplate}">
                     <ItemsControl.ItemsPanel>
@@ -71,7 +71,7 @@
                 </ItemsControl>
             </GroupBox>
 
-            <GroupBox Header="{Binding [GroupShades], Source={StaticResource Loc}}" Padding="12">
+            <GroupBox Header="{Tr 'GroupShades'}" Padding="12">
                 <ItemsControl ItemsSource="{x:Static res:Palette.Roles}"
                               ItemTemplate="{StaticResource ShadesTemplate}"/>
             </GroupBox>

@@ -1,0 +1,915 @@
+From 7061ecd51586eb5d0cd4f66ddb6087f6145d8b11 Mon Sep 17 00:00:00 2001
+From: Urtyom-Alyanov <urtyomalyanov@gmail.com>
+Date: Fri, 27 Nov 2026 22:02:15 +0000
+Subject: [PATCH 6/6] =?UTF-8?q?=D0=9B=D0=A0-2:=20=D0=BB=D0=BE=D0=BA=D0=B0?=
+ =?UTF-8?q?=D0=BB=D0=B8=D0=B7=D0=B0=D1=86=D0=B8=D1=8F=20=D0=BD=D0=B0=20Cod?=
+ =?UTF-8?q?ingSeb.Localization=20(JSON-=D0=BF=D0=B5=D1=80=D0=B5=D0=B2?=
+ =?UTF-8?q?=D0=BE=D0=B4=D1=8B,=20=D1=80=D0=B0=D0=B7=D0=BC=D0=B5=D1=82?=
+ =?UTF-8?q?=D0=BA=D0=B0=20Tr)?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+---
+ README.md                                   |   4 +-
+ WpfFirstLab/App.xaml                        |   4 -
+ WpfFirstLab/App.xaml.cs                     |   9 +
+ WpfFirstLab/Localization/Strings.loc.json   | 210 ++++++++++++++++++++
+ WpfFirstLab/MainWindow.xaml                 |  12 +-
+ WpfFirstLab/Services/LocalizationService.cs |  97 ---------
+ WpfFirstLab/ViewModels/SettingsViewModel.cs |  19 +-
+ WpfFirstLab/Views/BindingsTabView.xaml      |  18 +-
+ WpfFirstLab/Views/CommonTabView.xaml        |  12 +-
+ WpfFirstLab/Views/ControlsTabView.xaml      |  22 +-
+ WpfFirstLab/Views/PaletteTabView.xaml       |  14 +-
+ WpfFirstLab/Views/TableTabView.xaml         |  44 ++--
+ WpfFirstLab/WpfFirstLab.csproj              |  14 ++
+ 13 files changed, 309 insertions(+), 170 deletions(-)
+ create mode 100644 WpfFirstLab/Localization/Strings.loc.json
+ delete mode 100644 WpfFirstLab/Services/LocalizationService.cs
+
+diff --git a/README.md b/README.md
+index 90734a3..4fb10ec 100644
+--- a/README.md
++++ b/README.md
+@@ -7,12 +7,12 @@
+ | Проект | Назначение |
+ |---|---|
+ | `WpfFirstLab.Resources` | Библиотека ресурсов: палитра (`Palette`), присоединяемые свойства (`Ui`), стили и шаблоны (`Styles/`), кисти тем (`Themes/Light.xaml`, `Themes/Dark.xaml`) |
+-| `WpfFirstLab` | Приложение: модели (`Models`), модели представления (`ViewModels`), представления (`Views`), сервисы, конвертеры, команды |
++| `WpfFirstLab` | Приложение: модели (`Models`), модели представления (`ViewModels`), представления (`Views`), сервисы, конвертеры, команды; переводы — `Localization/Strings.loc.json` (библиотека [CodingSeb.Localization](https://github.com/codingseb/Localization)) |
+ 
+ ## Запуск
+ 
+ Откройте `WpfFirstLab.slnx` в Visual Studio 2022+ (или Rider) и запустите проект `WpfFirstLab`.
+-Требуется .NET 10 SDK и Windows.
++Требуется .NET 10 SDK и Windows. Пакеты NuGet (CodingSeb.Localization) восстанавливаются автоматически.
+ 
+ ## Вкладки
+ 
+diff --git a/WpfFirstLab/App.xaml b/WpfFirstLab/App.xaml
+index b4623de..4210d1e 100644
+--- a/WpfFirstLab/App.xaml
++++ b/WpfFirstLab/App.xaml
+@@ -1,7 +1,6 @@
+ <Application x:Class="WpfFirstLab.App"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-             xmlns:svc="clr-namespace:WpfFirstLab.Services"
+              xmlns:conv="clr-namespace:WpfFirstLab.Converters"
+              StartupUri="MainWindow.xaml">
+     <Application.Resources>
+@@ -13,9 +12,6 @@
+                 <ResourceDictionary Source="pack://application:,,,/WpfFirstLab.Resources;component/Styles/AllStyles.xaml"/>
+             </ResourceDictionary.MergedDictionaries>
+ 
+-            <!-- Служба локализации: {Binding [Ключ], Source={StaticResource Loc}} -->
+-            <x:Static x:Key="Loc" Member="svc:LocalizationService.Instance"/>
+-
+             <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+             <conv:PercentConverter x:Key="Percent"/>
+             <conv:ValueToBrushConverter x:Key="ValueToBrush"/>
+diff --git a/WpfFirstLab/App.xaml.cs b/WpfFirstLab/App.xaml.cs
+index b2f44e9..df098a0 100644
+--- a/WpfFirstLab/App.xaml.cs
++++ b/WpfFirstLab/App.xaml.cs
+@@ -1,4 +1,7 @@
+ using System.Globalization;
++using System.IO;
++using CodingSeb.Localization;
++using CodingSeb.Localization.Loaders;
+ using System.Windows;
+ using System.Windows.Markup;
+ 
+@@ -14,6 +17,12 @@ public partial class App : Application
+             typeof(FrameworkElement),
+             new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(CultureInfo.CurrentCulture.IetfLanguageTag)));
+ 
++        // Локализация (CodingSeb.Localization): загрузчик JSON-файлов и каталог с переводами.
++        // Выполняется до создания окна, чтобы разметка {Tr 'Ключ'} сразу получила строки.
++        LocalizationLoader.Instance.FileLanguageLoaders.Add(new JsonFileLoader());
++        LocalizationLoader.Instance.AddDirectory(Path.Combine(AppContext.BaseDirectory, "Localization"));
++        Loc.Instance.CurrentLanguage = "ru";
++
+         base.OnStartup(e);
+     }
+ }
+diff --git a/WpfFirstLab/Localization/Strings.loc.json b/WpfFirstLab/Localization/Strings.loc.json
+new file mode 100644
+index 0000000..082903e
+--- /dev/null
++++ b/WpfFirstLab/Localization/Strings.loc.json
+@@ -0,0 +1,210 @@
++{
++  "TabCommon": {
++    "ru": "Основное",
++    "en": "General"
++  },
++  "TabPalette": {
++    "ru": "Цветовая палитра",
++    "en": "Color palette"
++  },
++  "TabControls": {
++    "ru": "Элементы управления",
++    "en": "Controls"
++  },
++  "TabLayout": {
++    "ru": "Контейнеры компоновки",
++    "en": "Layout containers"
++  },
++  "TabTable": {
++    "ru": "Таблицы",
++    "en": "Tables"
++  },
++  "TabBindings": {
++    "ru": "Привязки",
++    "en": "Bindings"
++  },
++  "GroupPersonalization": {
++    "ru": "Персонализация",
++    "en": "Personalization"
++  },
++  "GroupFonts": {
++    "ru": "Шрифты",
++    "en": "Fonts"
++  },
++  "LabelTheme": {
++    "ru": "Тема приложения:",
++    "en": "Application theme:"
++  },
++  "LabelLanguage": {
++    "ru": "Язык приложения:",
++    "en": "Application language:"
++  },
++  "LabelFont": {
++    "ru": "Шрифт приложения:",
++    "en": "Application font:"
++  },
++  "LabelFontSize": {
++    "ru": "Размер шрифта:",
++    "en": "Font size:"
++  },
++  "ThemeLight": {
++    "ru": "Светлая",
++    "en": "Light"
++  },
++  "ThemeDark": {
++    "ru": "Тёмная",
++    "en": "Dark"
++  },
++  "ThemeSystem": {
++    "ru": "Системная",
++    "en": "System"
++  },
++  "CurrentTheme": {
++    "ru": "Текущая тема приложения: ",
++    "en": "Current application theme: "
++  },
++  "GroupBaseColors": {
++    "ru": "Основные цвета",
++    "en": "Base colors"
++  },
++  "GroupStatusColors": {
++    "ru": "Индикаторные цвета",
++    "en": "Status colors"
++  },
++  "GroupShades": {
++    "ru": "Оттенки цветов (10 оттенков для каждого цвета)",
++    "en": "Color shades (10 shades per color)"
++  },
++  "ColColor": {
++    "ru": "Цвет",
++    "en": "Color"
++  },
++  "ColRgb": {
++    "ru": "RGB-код",
++    "en": "RGB code"
++  },
++  "ColName": {
++    "ru": "Наименование",
++    "en": "Name"
++  },
++  "ExpButtons": {
++    "ru": "1. Кнопки",
++    "en": "1. Buttons"
++  },
++  "ExpInputs": {
++    "ru": "2. Поля ввода и списки",
++    "en": "2. Inputs and lists"
++  },
++  "ExpText": {
++    "ru": "3. TextBlock и Label",
++    "en": "3. TextBlock and Label"
++  },
++  "ExpTree": {
++    "ru": "4. TreeView",
++    "en": "4. TreeView"
++  },
++  "ExpGrid": {
++    "ru": "5. DataGrid",
++    "en": "5. DataGrid"
++  },
++  "ExpProgress": {
++    "ru": "6. ProgressBar",
++    "en": "6. ProgressBar"
++  },
++  "ExpToolTips": {
++    "ru": "7. Всплывающие подсказки",
++    "en": "7. Tooltips"
++  },
++  "ExpMenus": {
++    "ru": "8. Меню и контекстное меню",
++    "en": "8. Menus and context menu"
++  },
++  "TableSource": {
++    "ru": "Таблица 1 (источник)",
++    "en": "Table 1 (source)"
++  },
++  "TableTarget": {
++    "ru": "Таблица 2 (приёмник)",
++    "en": "Table 2 (target)"
++  },
++  "Active": {
++    "ru": "● активна",
++    "en": "● active"
++  },
++  "Add": {
++    "ru": "Добавить",
++    "en": "Add"
++  },
++  "Update": {
++    "ru": "Изменить",
++    "en": "Update"
++  },
++  "Delete": {
++    "ru": "Удалить",
++    "en": "Delete"
++  },
++  "Copy": {
++    "ru": "Копировать",
++    "en": "Copy"
++  },
++  "Paste": {
++    "ru": "Вставить",
++    "en": "Paste"
++  },
++  "GroupEditor": {
++    "ru": "Данные записи",
++    "en": "Record data"
++  },
++  "FieldName": {
++    "ru": "ФИО:",
++    "en": "Full name:"
++  },
++  "FieldGroup": {
++    "ru": "Группа:",
++    "en": "Group:"
++  },
++  "FieldScore": {
++    "ru": "Балл (0–5):",
++    "en": "Score (0–5):"
++  },
++  "ColStudent": {
++    "ru": "Студент",
++    "en": "Student"
++  },
++  "ColGroup": {
++    "ru": "Группа",
++    "en": "Group"
++  },
++  "ColScore": {
++    "ru": "Балл",
++    "en": "Score"
++  },
++  "TableHint": {
++    "ru": "Щёлкните по таблице, чтобы сделать её активной: кнопки панели инструментов и форма работают с активной таблицей.",
++    "en": "Click a table to make it active: the toolbar buttons and the form work with the active table."
++  },
++  "BindModes": {
++    "ru": "1. Режимы привязки (Mode)",
++    "en": "1. Binding modes (Mode)"
++  },
++  "BindTriggers": {
++    "ru": "2. Режимы обновления источника (UpdateSourceTrigger)",
++    "en": "2. Source update modes (UpdateSourceTrigger)"
++  },
++  "BindSources": {
++    "ru": "3. Источники привязки (ElementName, RelativeSource, Source)",
++    "en": "3. Binding sources (ElementName, RelativeSource, Source)"
++  },
++  "BindConverters": {
++    "ru": "4. Преобразование и форматирование",
++    "en": "4. Conversion and formatting"
++  },
++  "BindNotify": {
++    "ru": "5. Уведомление об изменении (INotifyPropertyChanged)",
++    "en": "5. Change notification (INotifyPropertyChanged)"
++  },
++  "BindValidation": {
++    "ru": "6. Проверка вводимых данных",
++    "en": "6. Input validation"
++  }
++}
+\ No newline at end of file
+diff --git a/WpfFirstLab/MainWindow.xaml b/WpfFirstLab/MainWindow.xaml
+index 89c39bc..726cb48 100644
+--- a/WpfFirstLab/MainWindow.xaml
++++ b/WpfFirstLab/MainWindow.xaml
+@@ -10,22 +10,22 @@
+         FontSize="{Binding Settings.FontSize}">
+     <!-- DataContext (MainViewModel) задаётся в MainWindow.xaml.cs; каждая вкладка получает свою дочернюю модель -->
+     <TabControl Margin="8">
+-        <TabItem Header="{Binding [TabCommon], Source={StaticResource Loc}}" Name="CommonTab">
++        <TabItem Header="{Tr 'TabCommon'}" Name="CommonTab">
+             <local:CommonTabView DataContext="{Binding Settings}"/>
+         </TabItem>
+-        <TabItem Header="{Binding [TabPalette], Source={StaticResource Loc}}" Name="ColorPaletteTab">
++        <TabItem Header="{Tr 'TabPalette'}" Name="ColorPaletteTab">
+             <local:PaletteTabView DataContext="{Binding Settings}"/>
+         </TabItem>
+-        <TabItem Header="{Binding [TabControls], Source={StaticResource Loc}}" Name="ControlElementsTab">
++        <TabItem Header="{Tr 'TabControls'}" Name="ControlElementsTab">
+             <local:ControlsTabView/>
+         </TabItem>
+-        <TabItem Header="{Binding [TabLayout], Source={StaticResource Loc}}" Name="LayoutContainersTab">
++        <TabItem Header="{Tr 'TabLayout'}" Name="LayoutContainersTab">
+             <local:LayoutTabView/>
+         </TabItem>
+-        <TabItem Header="{Binding [TabTable], Source={StaticResource Loc}}" Name="TableTab">
++        <TabItem Header="{Tr 'TabTable'}" Name="TableTab">
+             <local:TableTabView DataContext="{Binding Table}"/>
+         </TabItem>
+-        <TabItem Header="{Binding [TabBindings], Source={StaticResource Loc}}" Name="BindingsTab">
++        <TabItem Header="{Tr 'TabBindings'}" Name="BindingsTab">
+             <local:BindingsTabView DataContext="{Binding Bindings}"/>
+         </TabItem>
+     </TabControl>
+diff --git a/WpfFirstLab/Services/LocalizationService.cs b/WpfFirstLab/Services/LocalizationService.cs
+deleted file mode 100644
+index 32ef75b..0000000
+--- a/WpfFirstLab/Services/LocalizationService.cs
++++ /dev/null
+@@ -1,97 +0,0 @@
+-using System.ComponentModel;
+-
+-namespace WpfFirstLab.Services;
+-
+-public enum AppLanguage { Russian, English }
+-
+-/// <summary>
+-/// Простая локализация: строки хранятся в словаре, а XAML обращается к ним через индексатор
+-/// {Binding [Ключ], Source={x:Static services:LocalizationService.Instance}}.
+-/// При смене языка вызывается уведомление «Item[]», и все привязки обновляются.
+-/// </summary>
+-public sealed class LocalizationService : INotifyPropertyChanged
+-{
+-    public static LocalizationService Instance { get; } = new();
+-
+-    private AppLanguage _language = AppLanguage.Russian;
+-
+-    private static readonly Dictionary<string, (string Ru, string En)> Strings = new()
+-    {
+-        ["TabCommon"] = ("Основное", "General"),
+-        ["TabPalette"] = ("Цветовая палитра", "Color palette"),
+-        ["TabControls"] = ("Элементы управления", "Controls"),
+-        ["TabLayout"] = ("Контейнеры компоновки", "Layout containers"),
+-        ["TabTable"] = ("Таблицы", "Tables"),
+-        ["TabBindings"] = ("Привязки", "Bindings"),
+-
+-        ["GroupPersonalization"] = ("Персонализация", "Personalization"),
+-        ["GroupFonts"] = ("Шрифты", "Fonts"),
+-        ["LabelTheme"] = ("Тема приложения:", "Application theme:"),
+-        ["LabelLanguage"] = ("Язык приложения:", "Application language:"),
+-        ["LabelFont"] = ("Шрифт приложения:", "Application font:"),
+-        ["LabelFontSize"] = ("Размер шрифта:", "Font size:"),
+-        ["ThemeLight"] = ("Светлая", "Light"),
+-        ["ThemeDark"] = ("Тёмная", "Dark"),
+-        ["ThemeSystem"] = ("Системная", "System"),
+-
+-        ["CurrentTheme"] = ("Текущая тема приложения: ", "Current application theme: "),
+-        ["GroupBaseColors"] = ("Основные цвета", "Base colors"),
+-        ["GroupStatusColors"] = ("Индикаторные цвета", "Status colors"),
+-        ["GroupShades"] = ("Оттенки цветов (10 оттенков для каждого цвета)", "Color shades (10 shades per color)"),
+-        ["ColColor"] = ("Цвет", "Color"),
+-        ["ColRgb"] = ("RGB-код", "RGB code"),
+-        ["ColName"] = ("Наименование", "Name"),
+-
+-        ["ExpButtons"] = ("1. Кнопки", "1. Buttons"),
+-        ["ExpInputs"] = ("2. Поля ввода и списки", "2. Inputs and lists"),
+-        ["ExpText"] = ("3. TextBlock и Label", "3. TextBlock and Label"),
+-        ["ExpTree"] = ("4. TreeView", "4. TreeView"),
+-        ["ExpGrid"] = ("5. DataGrid", "5. DataGrid"),
+-        ["ExpProgress"] = ("6. ProgressBar", "6. ProgressBar"),
+-        ["ExpToolTips"] = ("7. Всплывающие подсказки", "7. Tooltips"),
+-        ["ExpMenus"] = ("8. Меню и контекстное меню", "8. Menus and context menu"),
+-
+-        ["TableSource"] = ("Таблица 1 (источник)", "Table 1 (source)"),
+-        ["TableTarget"] = ("Таблица 2 (приёмник)", "Table 2 (target)"),
+-        ["Active"] = ("● активна", "● active"),
+-        ["Add"] = ("Добавить", "Add"),
+-        ["Update"] = ("Изменить", "Update"),
+-        ["Delete"] = ("Удалить", "Delete"),
+-        ["Copy"] = ("Копировать", "Copy"),
+-        ["Paste"] = ("Вставить", "Paste"),
+-        ["GroupEditor"] = ("Данные записи", "Record data"),
+-        ["FieldName"] = ("ФИО:", "Full name:"),
+-        ["FieldGroup"] = ("Группа:", "Group:"),
+-        ["FieldScore"] = ("Балл (0–5):", "Score (0–5):"),
+-        ["ColStudent"] = ("Студент", "Student"),
+-        ["ColGroup"] = ("Группа", "Group"),
+-        ["ColScore"] = ("Балл", "Score"),
+-        ["TableHint"] = ("Щёлкните по таблице, чтобы сделать её активной: кнопки панели инструментов и форма работают с активной таблицей.",
+-                         "Click a table to make it active: the toolbar buttons and the form work with the active table."),
+-
+-        ["BindModes"] = ("1. Режимы привязки (Mode)", "1. Binding modes (Mode)"),
+-        ["BindTriggers"] = ("2. Режимы обновления источника (UpdateSourceTrigger)", "2. Source update modes (UpdateSourceTrigger)"),
+-        ["BindSources"] = ("3. Источники привязки (ElementName, RelativeSource, Source)", "3. Binding sources (ElementName, RelativeSource, Source)"),
+-        ["BindConverters"] = ("4. Преобразование и форматирование", "4. Conversion and formatting"),
+-        ["BindNotify"] = ("5. Уведомление об изменении (INotifyPropertyChanged)", "5. Change notification (INotifyPropertyChanged)"),
+-        ["BindValidation"] = ("6. Проверка вводимых данных", "6. Input validation"),
+-    };
+-
+-    public string this[string key] =>
+-        Strings.TryGetValue(key, out var pair) ? (_language == AppLanguage.Russian ? pair.Ru : pair.En) : $"[{key}]";
+-
+-    public AppLanguage Language
+-    {
+-        get => _language;
+-        set
+-        {
+-            if (_language == value) return;
+-            _language = value;
+-            // «Item[]» — стандартное имя индексатора: привязки вида [Ключ] перечитываются.
+-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("Item[]"));
+-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Language)));
+-        }
+-    }
+-
+-    public event PropertyChangedEventHandler? PropertyChanged;
+-}
+diff --git a/WpfFirstLab/ViewModels/SettingsViewModel.cs b/WpfFirstLab/ViewModels/SettingsViewModel.cs
+index 6417085..1ff86ee 100644
+--- a/WpfFirstLab/ViewModels/SettingsViewModel.cs
++++ b/WpfFirstLab/ViewModels/SettingsViewModel.cs
+@@ -1,3 +1,4 @@
++using CodingSeb.Localization;
+ using WpfFirstLab.Infrastructure;
+ using WpfFirstLab.Services;
+ 
+@@ -12,14 +13,19 @@ public sealed class LocalizedItem<T> : ViewModelBase
+     {
+         Value = value;
+         _key = key;
+-        LocalizationService.Instance.PropertyChanged += (_, _) => OnPropertyChanged(nameof(Name));
+     }
+ 
+     public T Value { get; }
+-    public string Name => LocalizationService.Instance[_key];
++
++    /// <summary>Название на текущем языке (Loc.Tr из CodingSeb.Localization).</summary>
++    public string Name => Loc.Tr(_key, _key);
++
++    /// <summary>Перечитывает название после смены языка.</summary>
++    public void Refresh() => OnPropertyChanged(nameof(Name));
+ }
+ 
+-public sealed record LanguageOption(AppLanguage Language, string NativeName);
++/// <summary>Язык интерфейса: код для CodingSeb.Localization («ru», «en») и название на этом языке.</summary>
++public sealed record LanguageOption(string Code, string NativeName);
+ 
+ /// <summary>Настройки вкладки «Основное»: тема, язык, шрифт и его размер.</summary>
+ public sealed class SettingsViewModel : ViewModelBase
+@@ -42,8 +48,8 @@ public sealed class SettingsViewModel : ViewModelBase
+         };
+         Languages = new[]
+         {
+-            new LanguageOption(AppLanguage.Russian, "Русский"),
+-            new LanguageOption(AppLanguage.English, "English"),
++            new LanguageOption("ru", "Русский"),
++            new LanguageOption("en", "English"),
+         };
+         Fonts = new[] { "Segoe UI", "Arial", "Times New Roman", "Consolas", "Calibri" };
+ 
+@@ -72,7 +78,8 @@ public sealed class SettingsViewModel : ViewModelBase
+         set
+         {
+             if (value is null || !SetProperty(ref _selectedLanguage, value)) return;
+-            LocalizationService.Instance.Language = value.Language;
++            Loc.Instance.CurrentLanguage = value.Code;
++            foreach (var theme in Themes) theme.Refresh();
+         }
+     }
+ 
+diff --git a/WpfFirstLab/Views/BindingsTabView.xaml b/WpfFirstLab/Views/BindingsTabView.xaml
+index 66cd3ca..6d701f3 100644
+--- a/WpfFirstLab/Views/BindingsTabView.xaml
++++ b/WpfFirstLab/Views/BindingsTabView.xaml
+@@ -1,13 +1,13 @@
+ <UserControl x:Class="WpfFirstLab.BindingsTabView"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+-             xmlns:svc="clr-namespace:WpfFirstLab.Services">
++             xmlns:loc="clr-namespace:CodingSeb.Localization;assembly=CodingSeb.Localization">
+     <!-- DataContext — BindingsViewModel -->
+     <ScrollViewer VerticalScrollBarVisibility="Auto">
+         <StackPanel Margin="16">
+ 
+             <!-- 1. Mode -->
+-            <GroupBox Header="{Binding [BindModes], Source={StaticResource Loc}}" Padding="10" Margin="0,0,0,10">
++            <GroupBox Header="{Tr 'BindModes'}" Padding="10" Margin="0,0,0,10">
+                 <StackPanel>
+                     <TextBlock Style="{StaticResource Caption}" Text="OneWay — источник → приёмник. Часы обновляет таймер модели:"/>
+                     <TextBlock Style="{StaticResource BodyText}" Text="{Binding Clock, Mode=OneWay}"/>
+@@ -45,7 +45,7 @@
+             </GroupBox>
+ 
+             <!-- 2. UpdateSourceTrigger -->
+-            <GroupBox Header="{Binding [BindTriggers], Source={StaticResource Loc}}" Padding="10" Margin="0,0,0,10">
++            <GroupBox Header="{Tr 'BindTriggers'}" Padding="10" Margin="0,0,0,10">
+                 <Grid>
+                     <Grid.ColumnDefinitions>
+                         <ColumnDefinition Width="170"/>
+@@ -97,7 +97,7 @@
+             </GroupBox>
+ 
+             <!-- 3. Источники привязки -->
+-            <GroupBox Header="{Binding [BindSources], Source={StaticResource Loc}}" Padding="10" Margin="0,0,0,10">
++            <GroupBox Header="{Tr 'BindSources'}" Padding="10" Margin="0,0,0,10">
+                 <StackPanel>
+                     <TextBlock Style="{StaticResource Caption}" Text="DataContext (по умолчанию) — все привязки выше берут данные из BindingsViewModel."/>
+ 
+@@ -118,16 +118,16 @@
+                     <TextBlock Style="{StaticResource BodyText}"
+                                Text="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=GroupBox}, StringFormat='Ширина внешнего GroupBox: {0:0} px'}"/>
+ 
+-                    <TextBlock Style="{StaticResource Caption}" Text="Source — произвольный объект (здесь статический экземпляр службы локализации):"/>
++                    <TextBlock Style="{StaticResource Caption}" Text="Source — произвольный объект (здесь Loc.Instance из библиотеки CodingSeb.Localization):"/>
+                     <TextBlock Style="{StaticResource BodyText}"
+-                               Text="{Binding Language, Source={x:Static svc:LocalizationService.Instance}, StringFormat='Текущий язык: {0}'}"/>
++                               Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, StringFormat='Текущий язык: {0}'}"/>
+ 
+                     <TextBlock Style="{StaticResource Caption}" Text="TemplatedParent — используется в шаблонах кнопок библиотеки ресурсов (цвет берётся у элемента, к которому применён шаблон)."/>
+                 </StackPanel>
+             </GroupBox>
+ 
+             <!-- 4. Конвертеры и форматирование -->
+-            <GroupBox Header="{Binding [BindConverters], Source={StaticResource Loc}}" Padding="10" Margin="0,0,0,10">
++            <GroupBox Header="{Tr 'BindConverters'}" Padding="10" Margin="0,0,0,10">
+                 <StackPanel>
+                     <TextBlock Style="{StaticResource Caption}" Text="Converter + ConverterParameter: значение ползунка → «40 %» и цвет роли (ошибка / информация / успех):"/>
+                     <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
+@@ -175,7 +175,7 @@
+             </GroupBox>
+ 
+             <!-- 5. INotifyPropertyChanged -->
+-            <GroupBox Header="{Binding [BindNotify], Source={StaticResource Loc}}" Padding="10" Margin="0,0,0,10">
++            <GroupBox Header="{Tr 'BindNotify'}" Padding="10" Margin="0,0,0,10">
+                 <StackPanel>
+                     <TextBlock Style="{StaticResource Caption}" Text="Оба счётчика увеличиваются одной командой. Интерфейс видит только тот, что уведомляет об изменении:"/>
+                     <TextBlock Style="{StaticResource BodyText}" Text="{Binding Counter, StringFormat='Counter (INotifyPropertyChanged): {0}'}"/>
+@@ -189,7 +189,7 @@
+             </GroupBox>
+ 
+             <!-- 6. Проверка данных -->
+-            <GroupBox Header="{Binding [BindValidation], Source={StaticResource Loc}}" Padding="10">
++            <GroupBox Header="{Tr 'BindValidation'}" Padding="10">
+                 <StackPanel>
+                     <TextBlock Style="{StaticResource Caption}" Text="ValidatesOnExceptions: исключение в set-методе Age или ошибка преобразования показываются как ошибка ввода. Введите, например, 200 или «abc»:"/>
+                     <StackPanel Orientation="Horizontal">
+diff --git a/WpfFirstLab/Views/CommonTabView.xaml b/WpfFirstLab/Views/CommonTabView.xaml
+index cbc89fd..de14109 100644
+--- a/WpfFirstLab/Views/CommonTabView.xaml
++++ b/WpfFirstLab/Views/CommonTabView.xaml
+@@ -4,7 +4,7 @@
+     <!-- DataContext — SettingsViewModel -->
+     <StackPanel Margin="16">
+ 
+-        <GroupBox Header="{Binding [GroupPersonalization], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
++        <GroupBox Header="{Tr 'GroupPersonalization'}" Padding="12" Margin="0,0,0,12">
+             <Grid>
+                 <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="180"/>
+@@ -15,19 +15,19 @@
+                     <RowDefinition Height="Auto"/>
+                 </Grid.RowDefinitions>
+ 
+-                <Label Grid.Row="0" Content="{Binding [LabelTheme], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Row="0" Content="{Tr 'LabelTheme'}" VerticalAlignment="Center"/>
+                 <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
+                           ItemsSource="{Binding Themes}" DisplayMemberPath="Name"
+                           SelectedItem="{Binding SelectedTheme}"/>
+ 
+-                <Label Grid.Row="1" Content="{Binding [LabelLanguage], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Row="1" Content="{Tr 'LabelLanguage'}" VerticalAlignment="Center"/>
+                 <ComboBox Grid.Row="1" Grid.Column="1" Width="240" HorizontalAlignment="Left"
+                           ItemsSource="{Binding Languages}" DisplayMemberPath="NativeName"
+                           SelectedItem="{Binding SelectedLanguage}"/>
+             </Grid>
+         </GroupBox>
+ 
+-        <GroupBox Header="{Binding [GroupFonts], Source={StaticResource Loc}}" Padding="12">
++        <GroupBox Header="{Tr 'GroupFonts'}" Padding="12">
+             <Grid>
+                 <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="180"/>
+@@ -38,7 +38,7 @@
+                     <RowDefinition Height="Auto"/>
+                 </Grid.RowDefinitions>
+ 
+-                <Label Grid.Row="0" Content="{Binding [LabelFont], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Row="0" Content="{Tr 'LabelFont'}" VerticalAlignment="Center"/>
+                 <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
+                           ItemsSource="{Binding Fonts}" SelectedItem="{Binding SelectedFont}">
+                     <ComboBox.ItemTemplate>
+@@ -48,7 +48,7 @@
+                     </ComboBox.ItemTemplate>
+                 </ComboBox>
+ 
+-                <Label Grid.Row="1" Content="{Binding [LabelFontSize], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Row="1" Content="{Tr 'LabelFontSize'}" VerticalAlignment="Center"/>
+                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
+                     <Slider Width="260" Minimum="8" Maximum="32" TickFrequency="2" TickPlacement="BottomRight"
+                             IsSnapToTickEnabled="True" VerticalAlignment="Center"
+diff --git a/WpfFirstLab/Views/ControlsTabView.xaml b/WpfFirstLab/Views/ControlsTabView.xaml
+index 12b571a..b4fddc4 100644
+--- a/WpfFirstLab/Views/ControlsTabView.xaml
++++ b/WpfFirstLab/Views/ControlsTabView.xaml
+@@ -169,9 +169,9 @@
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                     <DataGrid.Columns>
+                         <DataGridTextColumn Header="№" Width="50" Binding="{Binding Id}"/>
+-                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+-                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="160" Binding="{Binding Group}"/>
+-                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="80" Binding="{Binding Score}"/>
++                        <DataGridTextColumn Header="{Tr 'ColStudent'}" Width="*" Binding="{Binding Name}"/>
++                        <DataGridTextColumn Header="{Tr 'ColGroup'}" Width="160" Binding="{Binding Group}"/>
++                        <DataGridTextColumn Header="{Tr 'ColScore'}" Width="80" Binding="{Binding Score}"/>
+                     </DataGrid.Columns>
+                 </DataGrid>
+             </GroupBox>
+@@ -267,42 +267,42 @@
+     <ScrollViewer VerticalScrollBarVisibility="Auto" res:Ui.ForwardWheel="True">
+         <StackPanel Margin="16">
+ 
+-            <Expander Header="{Binding [ExpButtons], Source={StaticResource Loc}}" IsExpanded="True" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpButtons'}" IsExpanded="True" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource ButtonsTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpInputs], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpInputs'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource InputsTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpText], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpText'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource TextTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpTree], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpTree'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource TreeTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpGrid], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpGrid'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource GridTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpProgress], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpProgress'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource ProgressTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpToolTips], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpToolTips'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource ToolTipsTemplate}"/>
+             </Expander>
+ 
+-            <Expander Header="{Binding [ExpMenus], Source={StaticResource Loc}}" Margin="0,0,0,8">
++            <Expander Header="{Tr 'ExpMenus'}" Margin="0,0,0,8">
+                 <ItemsControl Margin="0,8,0,0" ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource MenusTemplate}"/>
+             </Expander>
+diff --git a/WpfFirstLab/Views/PaletteTabView.xaml b/WpfFirstLab/Views/PaletteTabView.xaml
+index e66b09b..35164de 100644
+--- a/WpfFirstLab/Views/PaletteTabView.xaml
++++ b/WpfFirstLab/Views/PaletteTabView.xaml
+@@ -23,7 +23,7 @@
+                           ItemsSource="{Binding Shades}"
+                           ScrollViewer.VerticalScrollBarVisibility="Disabled">
+                     <DataGrid.Columns>
+-                        <DataGridTemplateColumn Header="{Binding [ColColor], Source={StaticResource Loc}}" Width="90">
++                        <DataGridTemplateColumn Header="{Tr 'ColColor'}" Width="90">
+                             <DataGridTemplateColumn.CellTemplate>
+                                 <DataTemplate>
+                                     <Border Height="18" Width="56" CornerRadius="4" Margin="4,2"
+@@ -31,9 +31,9 @@
+                                 </DataTemplate>
+                             </DataGridTemplateColumn.CellTemplate>
+                         </DataGridTemplateColumn>
+-                        <DataGridTextColumn Header="{Binding [ColRgb], Source={StaticResource Loc}}" Width="160" Binding="{Binding Rgb}"/>
++                        <DataGridTextColumn Header="{Tr 'ColRgb'}" Width="160" Binding="{Binding Rgb}"/>
+                         <DataGridTextColumn Header="HEX" Width="120" Binding="{Binding Hex}"/>
+-                        <DataGridTextColumn Header="{Binding [ColName], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
++                        <DataGridTextColumn Header="{Tr 'ColName'}" Width="*" Binding="{Binding Name}"/>
+                     </DataGrid.Columns>
+                 </DataGrid>
+             </Expander>
+@@ -45,11 +45,11 @@
+         <StackPanel Margin="16">
+ 
+             <TextBlock FontSize="18" Margin="0,0,0,12">
+-                <Run Text="{Binding [CurrentTheme], Source={StaticResource Loc}, Mode=OneWay}"/>
++                <Run Text="{Tr 'CurrentTheme'}"/>
+                 <Run Text="{Binding SelectedTheme.Name, Mode=OneWay}" FontWeight="Bold"/>
+             </TextBlock>
+ 
+-            <GroupBox Header="{Binding [GroupBaseColors], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
++            <GroupBox Header="{Tr 'GroupBaseColors'}" Padding="12" Margin="0,0,0,12">
+                 <ItemsControl ItemsSource="{x:Static res:Palette.BaseRoles}"
+                               ItemTemplate="{StaticResource SwatchTemplate}">
+                     <ItemsControl.ItemsPanel>
+@@ -60,7 +60,7 @@
+                 </ItemsControl>
+             </GroupBox>
+ 
+-            <GroupBox Header="{Binding [GroupStatusColors], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
++            <GroupBox Header="{Tr 'GroupStatusColors'}" Padding="12" Margin="0,0,0,12">
+                 <ItemsControl ItemsSource="{x:Static res:Palette.StatusRoles}"
+                               ItemTemplate="{StaticResource SwatchTemplate}">
+                     <ItemsControl.ItemsPanel>
+@@ -71,7 +71,7 @@
+                 </ItemsControl>
+             </GroupBox>
+ 
+-            <GroupBox Header="{Binding [GroupShades], Source={StaticResource Loc}}" Padding="12">
++            <GroupBox Header="{Tr 'GroupShades'}" Padding="12">
+                 <ItemsControl ItemsSource="{x:Static res:Palette.Roles}"
+                               ItemTemplate="{StaticResource ShadesTemplate}"/>
+             </GroupBox>
+diff --git a/WpfFirstLab/Views/TableTabView.xaml b/WpfFirstLab/Views/TableTabView.xaml
+index a32f642..834d6a1 100644
+--- a/WpfFirstLab/Views/TableTabView.xaml
++++ b/WpfFirstLab/Views/TableTabView.xaml
+@@ -11,42 +11,42 @@
+             <Button Command="{Binding AddCommand}">
+                 <StackPanel Orientation="Horizontal">
+                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE710;" VerticalAlignment="Center"/>
+-                    <TextBlock Margin="6,0,0,0" Text="{Binding [Add], Source={StaticResource Loc}}"/>
++                    <TextBlock Margin="6,0,0,0" Text="{Tr 'Add'}"/>
+                 </StackPanel>
+             </Button>
+             <Button Command="{Binding UpdateCommand}">
+                 <StackPanel Orientation="Horizontal">
+                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE70F;" VerticalAlignment="Center"/>
+-                    <TextBlock Margin="6,0,0,0" Text="{Binding [Update], Source={StaticResource Loc}}"/>
++                    <TextBlock Margin="6,0,0,0" Text="{Tr 'Update'}"/>
+                 </StackPanel>
+             </Button>
+             <Button Command="{Binding DeleteCommand}">
+                 <StackPanel Orientation="Horizontal">
+                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74D;" VerticalAlignment="Center"/>
+-                    <TextBlock Margin="6,0,0,0" Text="{Binding [Delete], Source={StaticResource Loc}}"/>
++                    <TextBlock Margin="6,0,0,0" Text="{Tr 'Delete'}"/>
+                 </StackPanel>
+             </Button>
+             <Separator/>
+             <Button Command="{Binding CopyCommand}">
+                 <StackPanel Orientation="Horizontal">
+                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE8C8;" VerticalAlignment="Center"/>
+-                    <TextBlock Margin="6,0,0,0" Text="{Binding [Copy], Source={StaticResource Loc}}"/>
++                    <TextBlock Margin="6,0,0,0" Text="{Tr 'Copy'}"/>
+                 </StackPanel>
+             </Button>
+             <Button Command="{Binding PasteCommand}">
+                 <StackPanel Orientation="Horizontal">
+                     <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE77F;" VerticalAlignment="Center"/>
+-                    <TextBlock Margin="6,0,0,0" Text="{Binding [Paste], Source={StaticResource Loc}}"/>
++                    <TextBlock Margin="6,0,0,0" Text="{Tr 'Paste'}"/>
+                 </StackPanel>
+             </Button>
+         </ToolBar>
+ 
+         <TextBlock DockPanel.Dock="Top" Style="{StaticResource Caption}" Margin="0,0,0,8"
+-                   Text="{Binding [TableHint], Source={StaticResource Loc}}"/>
++                   Text="{Tr 'TableHint'}"/>
+ 
+         <!-- Форма редактирования записи: заполнение, изменение -->
+         <GroupBox DockPanel.Dock="Bottom" Padding="10" Margin="0,8,0,0"
+-                  Header="{Binding [GroupEditor], Source={StaticResource Loc}}">
++                  Header="{Tr 'GroupEditor'}">
+             <Grid>
+                 <Grid.ColumnDefinitions>
+                     <ColumnDefinition Width="Auto"/>
+@@ -57,20 +57,20 @@
+                     <ColumnDefinition Width="90"/>
+                     <ColumnDefinition Width="Auto"/>
+                 </Grid.ColumnDefinitions>
+-                <Label Grid.Column="0" Content="{Binding [FieldName], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Column="0" Content="{Tr 'FieldName'}" VerticalAlignment="Center"/>
+                 <TextBox Grid.Column="1" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                          Text="{Binding EditName, UpdateSourceTrigger=PropertyChanged}"/>
+-                <Label Grid.Column="2" Content="{Binding [FieldGroup], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Column="2" Content="{Tr 'FieldGroup'}" VerticalAlignment="Center"/>
+                 <TextBox Grid.Column="3" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                          Text="{Binding EditGroup, UpdateSourceTrigger=PropertyChanged}"/>
+-                <Label Grid.Column="4" Content="{Binding [FieldScore], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
++                <Label Grid.Column="4" Content="{Tr 'FieldScore'}" VerticalAlignment="Center"/>
+                 <TextBox Grid.Column="5" Style="{StaticResource ColorTextBox}" Margin="0,0,12,0"
+                          Text="{Binding EditScore, UpdateSourceTrigger=PropertyChanged}"/>
+                 <StackPanel Grid.Column="6" Orientation="Horizontal">
+                     <Button Style="{StaticResource PrimaryButton}" Command="{Binding AddCommand}"
+-                            Content="{Binding [Add], Source={StaticResource Loc}}" Margin="0,0,8,0"/>
++                            Content="{Tr 'Add'}" Margin="0,0,8,0"/>
+                     <Button Style="{StaticResource SecondaryButton}" Command="{Binding UpdateCommand}"
+-                            Content="{Binding [Update], Source={StaticResource Loc}}" Margin="0"/>
++                            Content="{Tr 'Update'}" Margin="0"/>
+                 </StackPanel>
+             </Grid>
+         </GroupBox>
+@@ -87,9 +87,9 @@
+                       b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Left}">
+                 <GroupBox.Header>
+                     <StackPanel Orientation="Horizontal">
+-                        <TextBlock Text="{Binding [TableSource], Source={StaticResource Loc}}"/>
++                        <TextBlock Text="{Tr 'TableSource'}"/>
+                         <TextBlock Margin="8,0,0,0" Foreground="{StaticResource PrimaryBrush}"
+-                                   Text="{Binding [Active], Source={StaticResource Loc}}"
++                                   Text="{Tr 'Active'}"
+                                    Visibility="{Binding IsLeftActive, Converter={StaticResource BoolToVis}}"/>
+                     </StackPanel>
+                 </GroupBox.Header>
+@@ -97,9 +97,9 @@
+                           ItemsSource="{Binding Left}" SelectedItem="{Binding SelectedLeft, Mode=TwoWay}">
+                     <DataGrid.Columns>
+                         <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
+-                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+-                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="130" Binding="{Binding Group}"/>
+-                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="60" Binding="{Binding Score}"/>
++                        <DataGridTextColumn Header="{Tr 'ColStudent'}" Width="*" Binding="{Binding Name}"/>
++                        <DataGridTextColumn Header="{Tr 'ColGroup'}" Width="130" Binding="{Binding Group}"/>
++                        <DataGridTextColumn Header="{Tr 'ColScore'}" Width="60" Binding="{Binding Score}"/>
+                     </DataGrid.Columns>
+                 </DataGrid>
+             </GroupBox>
+@@ -109,9 +109,9 @@
+                       b:FocusBehavior.CommandParameter="{x:Static vm:TableSide.Right}">
+                 <GroupBox.Header>
+                     <StackPanel Orientation="Horizontal">
+-                        <TextBlock Text="{Binding [TableTarget], Source={StaticResource Loc}}"/>
++                        <TextBlock Text="{Tr 'TableTarget'}"/>
+                         <TextBlock Margin="8,0,0,0" Foreground="{StaticResource PrimaryBrush}"
+-                                   Text="{Binding [Active], Source={StaticResource Loc}}"
++                                   Text="{Tr 'Active'}"
+                                    Visibility="{Binding IsRightActive, Converter={StaticResource BoolToVis}}"/>
+                     </StackPanel>
+                 </GroupBox.Header>
+@@ -119,9 +119,9 @@
+                           ItemsSource="{Binding Right}" SelectedItem="{Binding SelectedRight, Mode=TwoWay}">
+                     <DataGrid.Columns>
+                         <DataGridTextColumn Header="№" Width="50" IsReadOnly="True" Binding="{Binding Id, Mode=OneTime}"/>
+-                        <DataGridTextColumn Header="{Binding [ColStudent], Source={StaticResource Loc}}" Width="*" Binding="{Binding Name}"/>
+-                        <DataGridTextColumn Header="{Binding [ColGroup], Source={StaticResource Loc}}" Width="130" Binding="{Binding Group}"/>
+-                        <DataGridTextColumn Header="{Binding [ColScore], Source={StaticResource Loc}}" Width="60" Binding="{Binding Score}"/>
++                        <DataGridTextColumn Header="{Tr 'ColStudent'}" Width="*" Binding="{Binding Name}"/>
++                        <DataGridTextColumn Header="{Tr 'ColGroup'}" Width="130" Binding="{Binding Group}"/>
++                        <DataGridTextColumn Header="{Tr 'ColScore'}" Width="60" Binding="{Binding Score}"/>
+                     </DataGrid.Columns>
+                 </DataGrid>
+             </GroupBox>
+diff --git a/WpfFirstLab/WpfFirstLab.csproj b/WpfFirstLab/WpfFirstLab.csproj
+index 7b95d7f..c9a113c 100644
+--- a/WpfFirstLab/WpfFirstLab.csproj
++++ b/WpfFirstLab/WpfFirstLab.csproj
+@@ -10,6 +10,20 @@
+         <NoWarn>$(NoWarn);WPF0001</NoWarn>
+     </PropertyGroup>
+ 
++    <ItemGroup>
++        <!-- Локализация: ядро, разметка {Tr} для XAML и загрузчик файлов *.loc.json -->
++        <PackageReference Include="CodingSeb.Localization" Version="1.4.*" />
++        <PackageReference Include="CodingSeb.Localization.WPF" Version="1.4.*" />
++        <PackageReference Include="CodingSeb.Localization.JsonFileLoader" Version="1.4.*" />
++    </ItemGroup>
++
++    <ItemGroup>
++        <!-- Файлы переводов копируются в каталог с исполняемым файлом -->
++        <None Update="Localization\*.loc.json">
++            <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
++        </None>
++    </ItemGroup>
++
+     <ItemGroup>
+         <ProjectReference Include="..\WpfFirstLab.Resources\WpfFirstLab.Resources.csproj" />
+     </ItemGroup>
+-- 
+2.43.0
+

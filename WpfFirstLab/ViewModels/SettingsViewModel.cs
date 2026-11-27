@@ -1,3 +1,4 @@
+using CodingSeb.Localization;
 using WpfFirstLab.Infrastructure;
 using WpfFirstLab.Services;
 
@@ -12,14 +13,19 @@ public sealed class LocalizedItem<T> : ViewModelBase
     {
         Value = value;
         _key = key;
-        LocalizationService.Instance.PropertyChanged += (_, _) => OnPropertyChanged(nameof(Name));
     }
 
     public T Value { get; }
-    public string Name => LocalizationService.Instance[_key];
+
+    /// <summary>Название на текущем языке (Loc.Tr из CodingSeb.Localization).</summary>
+    public string Name => Loc.Tr(_key, _key);
+
+    /// <summary>Перечитывает название после смены языка.</summary>
+    public void Refresh() => OnPropertyChanged(nameof(Name));
 }
 
-public sealed record LanguageOption(AppLanguage Language, string NativeName);
+/// <summary>Язык интерфейса: код для CodingSeb.Localization («ru», «en») и название на этом языке.</summary>
+public sealed record LanguageOption(string Code, string NativeName);
 
 /// <summary>Настройки вкладки «Основное»: тема, язык, шрифт и его размер.</summary>
 public sealed class SettingsViewModel : ViewModelBase
@@ -42,8 +48,8 @@ public sealed class SettingsViewModel : ViewModelBase
         };
         Languages = new[]
         {
-            new LanguageOption(AppLanguage.Russian, "Русский"),
-            new LanguageOption(AppLanguage.English, "English"),
+            new LanguageOption("ru", "Русский"),
+            new LanguageOption("en", "English"),
         };
         Fonts = new[] { "Segoe UI", "Arial", "Times New Roman", "Consolas", "Calibri" };
 
@@ -72,7 +78,8 @@ public sealed class SettingsViewModel : ViewModelBase
         set
         {
             if (value is null || !SetProperty(ref _selectedLanguage, value)) return;
-            LocalizationService.Instance.Language = value.Language;
+            Loc.Instance.CurrentLanguage = value.Code;
+            foreach (var theme in Themes) theme.Refresh();
         }
     }
 

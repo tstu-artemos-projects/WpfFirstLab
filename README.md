@@ -7,12 +7,12 @@
 | Проект | Назначение |
 |---|---|
 | `WpfFirstLab.Resources` | Библиотека ресурсов: палитра (`Palette`), присоединяемые свойства (`Ui`), стили и шаблоны (`Styles/`), кисти тем (`Themes/Light.xaml`, `Themes/Dark.xaml`) |
-| `WpfFirstLab` | Приложение: модели (`Models`), модели представления (`ViewModels`), представления (`Views`), сервисы, конвертеры, команды |
+| `WpfFirstLab` | Приложение: модели (`Models`), модели представления (`ViewModels`), представления (`Views`), сервисы, конвертеры, команды; переводы — `Localization/Strings.loc.json` (библиотека [CodingSeb.Localization](https://github.com/codingseb/Localization)) |
 
 ## Запуск
 
 Откройте `WpfFirstLab.slnx` в Visual Studio 2022+ (или Rider) и запустите проект `WpfFirstLab`.
-Требуется .NET 10 SDK и Windows.
+Требуется .NET 10 SDK и Windows. Пакеты NuGet (CodingSeb.Localization) восстанавливаются автоматически.
 
 ## Вкладки
 

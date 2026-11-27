@@ -1,0 +1,210 @@
+{
+  "TabCommon": {
+    "ru": "Основное",
+    "en": "General"
+  },
+  "TabPalette": {
+    "ru": "Цветовая палитра",
+    "en": "Color palette"
+  },
+  "TabControls": {
+    "ru": "Элементы управления",
+    "en": "Controls"
+  },
+  "TabLayout": {
+    "ru": "Контейнеры компоновки",
+    "en": "Layout containers"
+  },
+  "TabTable": {
+    "ru": "Таблицы",
+    "en": "Tables"
+  },
+  "TabBindings": {
+    "ru": "Привязки",
+    "en": "Bindings"
+  },
+  "GroupPersonalization": {
+    "ru": "Персонализация",
+    "en": "Personalization"
+  },
+  "GroupFonts": {
+    "ru": "Шрифты",
+    "en": "Fonts"
+  },
+  "LabelTheme": {
+    "ru": "Тема приложения:",
+    "en": "Application theme:"
+  },
+  "LabelLanguage": {
+    "ru": "Язык приложения:",
+    "en": "Application language:"
+  },
+  "LabelFont": {
+    "ru": "Шрифт приложения:",
+    "en": "Application font:"
+  },
+  "LabelFontSize": {
+    "ru": "Размер шрифта:",
+    "en": "Font size:"
+  },
+  "ThemeLight": {
+    "ru": "Светлая",
+    "en": "Light"
+  },
+  "ThemeDark": {
+    "ru": "Тёмная",
+    "en": "Dark"
+  },
+  "ThemeSystem": {
+    "ru": "Системная",
+    "en": "System"
+  },
+  "CurrentTheme": {
+    "ru": "Текущая тема приложения: ",
+    "en": "Current application theme: "
+  },
+  "GroupBaseColors": {
+    "ru": "Основные цвета",
+    "en": "Base colors"
+  },
+  "GroupStatusColors": {
+    "ru": "Индикаторные цвета",
+    "en": "Status colors"
+  },
+  "GroupShades": {
+    "ru": "Оттенки цветов (10 оттенков для каждого цвета)",
+    "en": "Color shades (10 shades per color)"
+  },
+  "ColColor": {
+    "ru": "Цвет",
+    "en": "Color"
+  },
+  "ColRgb": {
+    "ru": "RGB-код",
+    "en": "RGB code"
+  },
+  "ColName": {
+    "ru": "Наименование",
+    "en": "Name"
+  },
+  "ExpButtons": {
+    "ru": "1. Кнопки",
+    "en": "1. Buttons"
+  },
+  "ExpInputs": {
+    "ru": "2. Поля ввода и списки",
+    "en": "2. Inputs and lists"
+  },
+  "ExpText": {
+    "ru": "3. TextBlock и Label",
+    "en": "3. TextBlock and Label"
+  },
+  "ExpTree": {
+    "ru": "4. TreeView",
+    "en": "4. TreeView"
+  },
+  "ExpGrid": {
+    "ru": "5. DataGrid",
+    "en": "5. DataGrid"
+  },
+  "ExpProgress": {
+    "ru": "6. ProgressBar",
+    "en": "6. ProgressBar"
+  },
+  "ExpToolTips": {
+    "ru": "7. Всплывающие подсказки",
+    "en": "7. Tooltips"
+  },
+  "ExpMenus": {
+    "ru": "8. Меню и контекстное меню",
+    "en": "8. Menus and context menu"
+  },
+  "TableSource": {
+    "ru": "Таблица 1 (источник)",
+    "en": "Table 1 (source)"
+  },
+  "TableTarget": {
+    "ru": "Таблица 2 (приёмник)",
+    "en": "Table 2 (target)"
+  },
+  "Active": {
+    "ru": "● активна",
+    "en": "● active"
+  },
+  "Add": {
+    "ru": "Добавить",
+    "en": "Add"
+  },
+  "Update": {
+    "ru": "Изменить",
+    "en": "Update"
+  },
+  "Delete": {
+    "ru": "Удалить",
+    "en": "Delete"
+  },
+  "Copy": {
+    "ru": "Копировать",
+    "en": "Copy"
+  },
+  "Paste": {
+    "ru": "Вставить",
+    "en": "Paste"
+  },
+  "GroupEditor": {
+    "ru": "Данные записи",
+    "en": "Record data"
+  },
+  "FieldName": {
+    "ru": "ФИО:",
+    "en": "Full name:"
+  },
+  "FieldGroup": {
+    "ru": "Группа:",
+    "en": "Group:"
+  },
+  "FieldScore": {
+    "ru": "Балл (0–5):",
+    "en": "Score (0–5):"
+  },
+  "ColStudent": {
+    "ru": "Студент",
+    "en": "Student"
+  },
+  "ColGroup": {
+    "ru": "Группа",
+    "en": "Group"
+  },
+  "ColScore": {
+    "ru": "Балл",
+    "en": "Score"
+  },
+  "TableHint": {
+    "ru": "Щёлкните по таблице, чтобы сделать её активной: кнопки панели инструментов и форма работают с активной таблицей.",
+    "en": "Click a table to make it active: the toolbar buttons and the form work with the active table."
+  },
+  "BindModes": {
+    "ru": "1. Режимы привязки (Mode)",
+    "en": "1. Binding modes (Mode)"
+  },
+  "BindTriggers": {
+    "ru": "2. Режимы обновления источника (UpdateSourceTrigger)",
+    "en": "2. Source update modes (UpdateSourceTrigger)"
+  },
+  "BindSources": {
+    "ru": "3. Источники привязки (ElementName, RelativeSource, Source)",
+    "en": "3. Binding sources (ElementName, RelativeSource, Source)"
+  },
+  "BindConverters": {
+    "ru": "4. Преобразование и форматирование",
+    "en": "4. Conversion and formatting"
+  },
+  "BindNotify": {
+    "ru": "5. Уведомление об изменении (INotifyPropertyChanged)",
+    "en": "5. Change notification (INotifyPropertyChanged)"
+  },
+  "BindValidation": {
+    "ru": "6. Проверка вводимых данных",
+    "en": "6. Input validation"
+  }
+}

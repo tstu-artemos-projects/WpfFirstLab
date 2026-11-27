@@ -10,22 +10,22 @@
         FontSize="{Binding Settings.FontSize}">
     <!-- DataContext (MainViewModel) задаётся в MainWindow.xaml.cs; каждая вкладка получает свою дочернюю модель -->
     <TabControl Margin="8">
-        <TabItem Header="{Binding [TabCommon], Source={StaticResource Loc}}" Name="CommonTab">
+        <TabItem Header="{Tr 'TabCommon'}" Name="CommonTab">
             <local:CommonTabView DataContext="{Binding Settings}"/>
         </TabItem>
-        <TabItem Header="{Binding [TabPalette], Source={StaticResource Loc}}" Name="ColorPaletteTab">
+        <TabItem Header="{Tr 'TabPalette'}" Name="ColorPaletteTab">
             <local:PaletteTabView DataContext="{Binding Settings}"/>
         </TabItem>
-        <TabItem Header="{Binding [TabControls], Source={StaticResource Loc}}" Name="ControlElementsTab">
+        <TabItem Header="{Tr 'TabControls'}" Name="ControlElementsTab">
             <local:ControlsTabView/>
         </TabItem>
-        <TabItem Header="{Binding [TabLayout], Source={StaticResource Loc}}" Name="LayoutContainersTab">
+        <TabItem Header="{Tr 'TabLayout'}" Name="LayoutContainersTab">
             <local:LayoutTabView/>
         </TabItem>
-        <TabItem Header="{Binding [TabTable], Source={StaticResource Loc}}" Name="TableTab">
+        <TabItem Header="{Tr 'TabTable'}" Name="TableTab">
             <local:TableTabView DataContext="{Binding Table}"/>
         </TabItem>
-        <TabItem Header="{Binding [TabBindings], Source={StaticResource Loc}}" Name="BindingsTab">
+        <TabItem Header="{Tr 'TabBindings'}" Name="BindingsTab">
             <local:BindingsTabView DataContext="{Binding Bindings}"/>
         </TabItem>
     </TabControl>

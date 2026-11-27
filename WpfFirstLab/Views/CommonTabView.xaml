@@ -4,7 +4,7 @@
     <!-- DataContext — SettingsViewModel -->
     <StackPanel Margin="16">
 
-        <GroupBox Header="{Binding [GroupPersonalization], Source={StaticResource Loc}}" Padding="12" Margin="0,0,0,12">
+        <GroupBox Header="{Tr 'GroupPersonalization'}" Padding="12" Margin="0,0,0,12">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"/>
@@ -15,19 +15,19 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="{Binding [LabelTheme], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" Content="{Tr 'LabelTheme'}" VerticalAlignment="Center"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
                           ItemsSource="{Binding Themes}" DisplayMemberPath="Name"
                           SelectedItem="{Binding SelectedTheme}"/>
 
-                <Label Grid.Row="1" Content="{Binding [LabelLanguage], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <Label Grid.Row="1" Content="{Tr 'LabelLanguage'}" VerticalAlignment="Center"/>
                 <ComboBox Grid.Row="1" Grid.Column="1" Width="240" HorizontalAlignment="Left"
                           ItemsSource="{Binding Languages}" DisplayMemberPath="NativeName"
                           SelectedItem="{Binding SelectedLanguage}"/>
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="{Binding [GroupFonts], Source={StaticResource Loc}}" Padding="12">
+        <GroupBox Header="{Tr 'GroupFonts'}" Padding="12">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="180"/>
@@ -38,7 +38,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Content="{Binding [LabelFont], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <Label Grid.Row="0" Content="{Tr 'LabelFont'}" VerticalAlignment="Center"/>
                 <ComboBox Grid.Row="0" Grid.Column="1" Width="240" HorizontalAlignment="Left" Margin="0,0,0,8"
                           ItemsSource="{Binding Fonts}" SelectedItem="{Binding SelectedFont}">
                     <ComboBox.ItemTemplate>
@@ -48,7 +48,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
 
-                <Label Grid.Row="1" Content="{Binding [LabelFontSize], Source={StaticResource Loc}}" VerticalAlignment="Center"/>
+                <Label Grid.Row="1" Content="{Tr 'LabelFontSize'}" VerticalAlignment="Center"/>
                 <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Horizontal">
                     <Slider Width="260" Minimum="8" Maximum="32" TickFrequency="2" TickPlacement="BottomRight"
                             IsSnapToTickEnabled="True" VerticalAlignment="Center"

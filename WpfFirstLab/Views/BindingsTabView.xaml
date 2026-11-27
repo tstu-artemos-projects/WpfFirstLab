@@ -9,13 +9,13 @@
             <!-- 1. Mode -->
             <GroupBox Header="{Tr 'BindModes'}" Padding="10" Margin="0,0,0,10">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Caption}" Text="OneWay — источник → приёмник. Часы обновляет таймер модели:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindOneWay'}"/>
                     <TextBlock Style="{StaticResource BodyText}" Text="{Binding Clock, Mode=OneWay}"/>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="OneTime — значение читается один раз при создании привязки (часы «замерли»):"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindOneTime'}"/>
                     <TextBlock Style="{StaticResource BodyText}" Text="{Binding Clock, Mode=OneTime}"/>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="TwoWay — два поля одного свойства; правка в любом отражается в другом:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindTwoWay'}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource ColorTextBox}" Width="220" Margin="0,0,8,8"
                                  Text="{Binding SharedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -23,15 +23,21 @@
                                  Text="{Binding SharedText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     </StackPanel>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="OneWayToSource — поле только пишет в источник (при создании очищает его):"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindOneWayToSource'}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource ColorTextBox}" Width="220" Margin="0,0,8,8"
                                  Text="{Binding Sink, Mode=OneWayToSource, UpdateSourceTrigger=PropertyChanged}"/>
-                        <TextBlock VerticalAlignment="Top" Margin="0,6,0,0" Style="{StaticResource BodyText}"
-                                   Text="{Binding Sink, StringFormat='В источнике: {0}'}"/>
+                        <TextBlock VerticalAlignment="Top" Margin="0,6,0,0" Style="{StaticResource BodyText}">
+                            <TextBlock.Text>
+                                <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                    <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                    <Binding Path="Sink"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
                     </StackPanel>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="Default — у TextBox.Text по умолчанию TwoWay, у TextBlock.Text — OneWay:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindDefault'}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource ColorTextBox}" Width="220" Margin="0,0,8,8"
                                  Text="{Binding DefaultModeText}"/>
@@ -40,7 +46,7 @@
                     </StackPanel>
 
                     <Button Style="{StaticResource SecondaryButton}" HorizontalAlignment="Left"
-                            Command="{Binding ChangeFromCodeCommand}" Content="Изменить значения из модели (источник → приёмник)"/>
+                            Command="{Binding ChangeFromCodeCommand}" Content="{Tr 'BindChangeFromCode'}"/>
                 </StackPanel>
             </GroupBox>
 
@@ -63,45 +69,75 @@
                     <TextBlock Grid.Row="0" VerticalAlignment="Center" Text="PropertyChanged" Style="{StaticResource BodyText}"/>
                     <TextBox Grid.Row="0" Grid.Column="1" Style="{StaticResource ColorTextBox}"
                              Text="{Binding PropertyChangedText, UpdateSourceTrigger=PropertyChanged}"/>
-                    <TextBlock Grid.Row="0" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
-                               Text="{Binding PropertyChangedText, StringFormat='В источнике: {0}'}"/>
+                     <TextBlock Grid.Row="0" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="PropertyChangedText"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
 
                     <TextBlock Grid.Row="1" VerticalAlignment="Center" Text="LostFocus" Style="{StaticResource BodyText}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" Style="{StaticResource ColorTextBox}"
                              Text="{Binding LostFocusText, UpdateSourceTrigger=LostFocus}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
-                               Text="{Binding LostFocusText, StringFormat='В источнике: {0}'}"/>
+                     <TextBlock Grid.Row="1" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="LostFocusText"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
 
-                    <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="Default (для Text — LostFocus)" Style="{StaticResource BodyText}"/>
+                     <TextBlock Grid.Row="2" VerticalAlignment="Center" Text="{Tr 'BindTriggerDefault'}" Style="{StaticResource BodyText}"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Style="{StaticResource ColorTextBox}"
                              Text="{Binding DefaultTriggerText}"/>
-                    <TextBlock Grid.Row="2" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
-                               Text="{Binding DefaultTriggerText, StringFormat='В источнике: {0}'}"/>
+                     <TextBlock Grid.Row="2" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="DefaultTriggerText"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
 
-                    <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="Explicit (по кнопке)" Style="{StaticResource BodyText}"/>
+                     <TextBlock Grid.Row="3" VerticalAlignment="Center" Text="{Tr 'BindTriggerExplicit'}" Style="{StaticResource BodyText}"/>
                     <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                         <TextBox x:Name="ExplicitBox" Style="{StaticResource ColorTextBox}" Width="150" Margin="0,0,8,8"
                                  Text="{Binding ExplicitText, UpdateSourceTrigger=Explicit}"/>
                         <Button Style="{StaticResource SecondaryButton}" Margin="0,0,0,8" Padding="8,4"
-                                Content="Применить" Click="ApplyExplicit_Click"/>
+                                 Content="{Tr 'BindApply'}" Click="ApplyExplicit_Click"/>
                     </StackPanel>
-                    <TextBlock Grid.Row="3" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
-                               Text="{Binding ExplicitText, StringFormat='В источнике: {0}'}"/>
+                     <TextBlock Grid.Row="3" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="ExplicitText"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
 
                     <TextBlock Grid.Row="4" VerticalAlignment="Center" Text="PropertyChanged + Delay=800" Style="{StaticResource BodyText}"/>
                     <TextBox Grid.Row="4" Grid.Column="1" Style="{StaticResource ColorTextBox}"
                              Text="{Binding DelayedText, UpdateSourceTrigger=PropertyChanged, Delay=800}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
-                               Text="{Binding DelayedText, StringFormat='В источнике: {0}'}"/>
+                     <TextBlock Grid.Row="4" Grid.Column="2" Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSinkFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="DelayedText"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
                 </Grid>
             </GroupBox>
 
             <!-- 3. Источники привязки -->
             <GroupBox Header="{Tr 'BindSources'}" Padding="10" Margin="0,0,0,10">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Caption}" Text="DataContext (по умолчанию) — все привязки выше берут данные из BindingsViewModel."/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindDataContext'}"/>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="ElementName — привязка к другому элементу: ползунок управляет числом и индикатором:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindElementName'}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                         <Slider x:Name="DemoSlider" Width="260" Minimum="0" Maximum="100" Value="40" VerticalAlignment="Center"/>
                         <TextBlock Margin="12,0,0,0" VerticalAlignment="Center" Style="{StaticResource BodyText}"
@@ -110,26 +146,44 @@
                     <ProgressBar Style="{StaticResource ColorProgressBar}" Maximum="100" Width="260" HorizontalAlignment="Left"
                                  Value="{Binding Value, ElementName=DemoSlider}"/>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="RelativeSource Self — свойство самого элемента:"/>
-                    <TextBlock Style="{StaticResource BodyText}"
-                               Text="{Binding ActualWidth, RelativeSource={RelativeSource Self}, StringFormat='Ширина этого TextBlock: {0:0} px'}"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindRelativeSelf'}"/>
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindSelfWidthFormat">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource Self}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="RelativeSource FindAncestor — свойство родителя заданного типа (GroupBox):"/>
-                    <TextBlock Style="{StaticResource BodyText}"
-                               Text="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=GroupBox}, StringFormat='Ширина внешнего GroupBox: {0:0} px'}"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindRelativeAncestor'}"/>
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindAncestorWidthFormat">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType=GroupBox}"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="Source — произвольный объект (здесь Loc.Instance из библиотеки CodingSeb.Localization):"/>
-                    <TextBlock Style="{StaticResource BodyText}"
-                               Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, StringFormat='Текущий язык: {0}'}"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindSource'}"/>
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindCurrentLanguageFormat">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="TemplatedParent — используется в шаблонах кнопок библиотеки ресурсов (цвет берётся у элемента, к которому применён шаблон)."/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindTemplatedParent'}"/>
                 </StackPanel>
             </GroupBox>
 
             <!-- 4. Конвертеры и форматирование -->
             <GroupBox Header="{Tr 'BindConverters'}" Padding="10" Margin="0,0,0,10">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Caption}" Text="Converter + ConverterParameter: значение ползунка → «40 %» и цвет роли (ошибка / информация / успех):"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindConverterParam'}"/>
                     <StackPanel Orientation="Horizontal" Margin="0,0,0,4">
                         <TextBlock Style="{StaticResource BodyText}" VerticalAlignment="Center" Width="60"
                                    Text="{Binding Value, ElementName=DemoSlider, Converter={StaticResource Percent}, ConverterParameter=100}"/>
@@ -137,12 +191,12 @@
                                 Background="{Binding Value, ElementName=DemoSlider, Converter={StaticResource ValueToBrush}}"/>
                     </StackPanel>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="BooleanToVisibilityConverter: флажок показывает и скрывает текст:"/>
-                    <CheckBox Content="Показать подробности" IsChecked="{Binding ShowDetails}" Margin="0,0,0,4"/>
-                    <TextBlock Style="{StaticResource BodyText}" Text="Подробности отображаются, пока флажок установлен."
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindBoolToVis'}"/>
+                    <CheckBox Content="{Tr 'BindShowDetails'}" IsChecked="{Binding ShowDetails}" Margin="0,0,0,4"/>
+                    <TextBlock Style="{StaticResource BodyText}" Text="{Tr 'BindDetailsText'}"
                                Visibility="{Binding ShowDetails, Converter={StaticResource BoolToVis}}"/>
 
-                    <TextBlock Style="{StaticResource Caption}" Text="MultiBinding + IMultiValueConverter и MultiBinding + StringFormat:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindMulti'}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox Style="{StaticResource ColorTextBox}" Width="150" Margin="0,0,8,8"
                                  Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}"/>
@@ -157,33 +211,59 @@
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
+                     <TextBlock Style="{StaticResource BodyText}">
+                         <TextBlock.Text>
+                             <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindFullNameFormat">
+                                 <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                 <Binding Path="LastName"/>
+                                 <Binding Path="FirstName"/>
+                             </MultiBinding>
+                         </TextBlock.Text>
+                     </TextBlock>
+
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindNullFallback'}"/>
                     <TextBlock Style="{StaticResource BodyText}">
                         <TextBlock.Text>
-                            <MultiBinding StringFormat="Имя: {1}, фамилия: {0}">
-                                <Binding Path="LastName"/>
-                                <Binding Path="FirstName"/>
+                            <MultiBinding Converter="{StaticResource LocalizedValue}" ConverterParameter="BindNullValue">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="NullableText" TargetNullValue="__NULL__"/>
                             </MultiBinding>
                         </TextBlock.Text>
                     </TextBlock>
-
-                    <TextBlock Style="{StaticResource Caption}" Text="TargetNullValue (источник вернул null) и FallbackValue (путь не найден):"/>
-                    <TextBlock Style="{StaticResource BodyText}"
-                               Text="{Binding NullableText, TargetNullValue='(значение не задано)'}"/>
-                    <TextBlock Style="{StaticResource BodyText}"
-                               Text="{Binding NoSuchProperty, FallbackValue='(свойство не найдено)'}"/>
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedValue}" ConverterParameter="BindFallbackValue">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="NoSuchProperty" FallbackValue="__MISSING__"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                 </StackPanel>
             </GroupBox>
 
             <!-- 5. INotifyPropertyChanged -->
             <GroupBox Header="{Tr 'BindNotify'}" Padding="10" Margin="0,0,0,10">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Caption}" Text="Оба счётчика увеличиваются одной командой. Интерфейс видит только тот, что уведомляет об изменении:"/>
-                    <TextBlock Style="{StaticResource BodyText}" Text="{Binding Counter, StringFormat='Counter (INotifyPropertyChanged): {0}'}"/>
-                    <TextBlock x:Name="PlainText" Style="{StaticResource BodyText}"
-                               Text="{Binding Plain.Value, StringFormat='Plain.Value (без уведомлений): {0}'}"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindNotifyHint'}"/>
+                    <TextBlock Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindCounterFormat">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="Counter"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
+                    <TextBlock x:Name="PlainText" Style="{StaticResource BodyText}">
+                        <TextBlock.Text>
+                            <MultiBinding Converter="{StaticResource LocalizedFormat}" ConverterParameter="BindPlainFormat">
+                                <Binding Path="CurrentLanguage" Source="{x:Static loc:Loc.Instance}" Mode="OneWay"/>
+                                <Binding Path="Plain.Value"/>
+                            </MultiBinding>
+                        </TextBlock.Text>
+                    </TextBlock>
                     <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                        <Button Style="{StaticResource PrimaryButton}" Command="{Binding IncrementCommand}" Content="Увеличить"/>
-                        <Button Style="{StaticResource SecondaryButton}" Content="Перечитать привязку (UpdateTarget)" Click="RefreshPlain_Click"/>
+                        <Button Style="{StaticResource PrimaryButton}" Command="{Binding IncrementCommand}" Content="{Tr 'BindIncrement'}"/>
+                        <Button Style="{StaticResource SecondaryButton}" Content="{Tr 'BindRefresh'}" Click="RefreshPlain_Click"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
@@ -191,7 +271,7 @@
             <!-- 6. Проверка данных -->
             <GroupBox Header="{Tr 'BindValidation'}" Padding="10">
                 <StackPanel>
-                    <TextBlock Style="{StaticResource Caption}" Text="ValidatesOnExceptions: исключение в set-методе Age или ошибка преобразования показываются как ошибка ввода. Введите, например, 200 или «abc»:"/>
+                    <TextBlock Style="{StaticResource Caption}" Text="{Tr 'BindValidationHint'}"/>
                     <StackPanel Orientation="Horizontal">
                         <TextBox x:Name="AgeBox" Width="120" Margin="0,0,12,0"
                                  Text="{Binding Age, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}"/>

@@ -16,6 +16,9 @@
             <conv:PercentConverter x:Key="Percent"/>
             <conv:ValueToBrushConverter x:Key="ValueToBrush"/>
             <conv:FullNameConverter x:Key="FullName"/>
+            <conv:LocalizedTextConverter x:Key="LocalizedText"/>
+            <conv:LocalizedFormatConverter x:Key="LocalizedFormat"/>
+            <conv:LocalizedValueConverter x:Key="LocalizedValue"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

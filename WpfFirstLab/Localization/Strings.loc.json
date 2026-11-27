@@ -206,5 +206,533 @@
   "BindValidation": {
     "ru": "6. Проверка вводимых данных",
     "en": "6. Input validation"
+  },
+  "MainWindowTitle": {
+    "ru": "Главное окно",
+    "en": "Main window"
+  },
+  "PaletteColorPrimary": {
+    "ru": "Основной",
+    "en": "Primary"
+  },
+  "PaletteColorAccent": {
+    "ru": "Акцентный",
+    "en": "Accent"
+  },
+  "PaletteColorSuccess": {
+    "ru": "Успех",
+    "en": "Success"
+  },
+  "PaletteColorError": {
+    "ru": "Ошибка",
+    "en": "Error"
+  },
+  "PaletteColorInfo": {
+    "ru": "Информация",
+    "en": "Info"
+  },
+  "PaletteFamilyBlue": {
+    "ru": "Синий",
+    "en": "Blue"
+  },
+  "PaletteFamilyPurple": {
+    "ru": "Фиолетовый",
+    "en": "Purple"
+  },
+  "PaletteFamilyGreen": {
+    "ru": "Зелёный",
+    "en": "Green"
+  },
+  "PaletteFamilyRed": {
+    "ru": "Красный",
+    "en": "Red"
+  },
+  "PaletteFamilyTeal": {
+    "ru": "Бирюзовый",
+    "en": "Teal"
+  },
+  "CtrlButtonsHint": {
+    "ru": "Обычные кнопки: основная, вторичная, третичная (наведение и нажатие — мышью)",
+    "en": "Regular buttons: primary, secondary, tertiary (hover and press with the mouse)"
+  },
+  "CtrlPrimary": {
+    "ru": "Основная",
+    "en": "Primary"
+  },
+  "CtrlSecondary": {
+    "ru": "Вторичная",
+    "en": "Secondary"
+  },
+  "CtrlTertiary": {
+    "ru": "Третичная",
+    "en": "Tertiary"
+  },
+  "CtrlDisabledButton": {
+    "ru": "Отключена",
+    "en": "Disabled"
+  },
+  "CtrlIconButtonsHint": {
+    "ru": "Кнопки-пиктограммы (шрифт Segoe MDL2 Assets)",
+    "en": "Icon buttons (Segoe MDL2 Assets font)"
+  },
+  "CtrlSave": {
+    "ru": "Сохранить",
+    "en": "Save"
+  },
+  "CtrlTogglesHint": {
+    "ru": "Переключатели: кнопка-переключатель и тумблер (выключен, включён, отключён)",
+    "en": "Toggle buttons: toggle button and switch (off, on, disabled)"
+  },
+  "CtrlTurnOn": {
+    "ru": "Включить",
+    "en": "Turn on"
+  },
+  "CtrlOn": {
+    "ru": "Включено",
+    "en": "On"
+  },
+  "CtrlDisabled": {
+    "ru": "Отключён",
+    "en": "Disabled"
+  },
+  "CtrlListBoxHint": {
+    "ru": "ListBox (выбран, отключён элемент)",
+    "en": "ListBox (selected, disabled item)"
+  },
+  "CtrlFirstItem": {
+    "ru": "Первый элемент",
+    "en": "First item"
+  },
+  "CtrlSecondItem": {
+    "ru": "Второй элемент",
+    "en": "Second item"
+  },
+  "CtrlThirdItem": {
+    "ru": "Третий элемент",
+    "en": "Third item"
+  },
+  "CtrlUnavailable": {
+    "ru": "Недоступный",
+    "en": "Unavailable"
+  },
+  "CtrlComboBoxHint": {
+    "ru": "ComboBox (обычный, отключён)",
+    "en": "ComboBox (regular, disabled)"
+  },
+  "CtrlOption1": {
+    "ru": "Вариант 1",
+    "en": "Option 1"
+  },
+  "CtrlOption2": {
+    "ru": "Вариант 2",
+    "en": "Option 2"
+  },
+  "CtrlOption3": {
+    "ru": "Вариант 3",
+    "en": "Option 3"
+  },
+  "CtrlTextBoxHint": {
+    "ru": "TextBox (обычный, только чтение, отключён)",
+    "en": "TextBox (regular, read-only, disabled)"
+  },
+  "CtrlEnterText": {
+    "ru": "Введите текст",
+    "en": "Enter text"
+  },
+  "CtrlReadOnly": {
+    "ru": "Только чтение",
+    "en": "Read-only"
+  },
+  "CtrlPasswordHint": {
+    "ru": "PasswordBox (обычный, отключён)",
+    "en": "PasswordBox (regular, disabled)"
+  },
+  "CtrlRichHint": {
+    "ru": "RichTextBox (обычный, отключён)",
+    "en": "RichTextBox (regular, disabled)"
+  },
+  "RichNormalPrefix": {
+    "ru": "Обычный, ",
+    "en": "Regular, "
+  },
+  "RichBold": {
+    "ru": "жирный",
+    "en": "bold"
+  },
+  "RichItalic": {
+    "ru": "курсивный",
+    "en": "italic"
+  },
+  "RichAnd": {
+    "ru": " и ",
+    "en": " and "
+  },
+  "RichUnderline": {
+    "ru": "подчёркнутый",
+    "en": "underlined"
+  },
+  "RichSuffix": {
+    "ru": " текст.",
+    "en": " text."
+  },
+  "RichDisabled": {
+    "ru": "Отключённое поле.",
+    "en": "Disabled field."
+  },
+  "CtrlHeading1": {
+    "ru": "Заголовок 1",
+    "en": "Heading 1"
+  },
+  "CtrlHeading2": {
+    "ru": "Заголовок 2",
+    "en": "Heading 2"
+  },
+  "CtrlHeading3": {
+    "ru": "Заголовок 3",
+    "en": "Heading 3"
+  },
+  "CtrlBody": {
+    "ru": "Обычный текст абзаца.",
+    "en": "Regular paragraph text."
+  },
+  "CtrlCaption": {
+    "ru": "Подпись к элементу",
+    "en": "Element caption"
+  },
+  "CtrlProject": {
+    "ru": "Проект",
+    "en": "Project"
+  },
+  "CtrlModels": {
+    "ru": "Модели",
+    "en": "Models"
+  },
+  "CtrlViews": {
+    "ru": "Представления",
+    "en": "Views"
+  },
+  "CtrlUnavailableNode": {
+    "ru": "Недоступный узел",
+    "en": "Unavailable node"
+  },
+  "CtrlDisabledTree": {
+    "ru": "Отключённое дерево",
+    "en": "Disabled tree"
+  },
+  "CtrlNode1": {
+    "ru": "Узел 1",
+    "en": "Node 1"
+  },
+  "CtrlNode2": {
+    "ru": "Узел 2",
+    "en": "Node 2"
+  },
+  "CtrlDeterminateProgress": {
+    "ru": "Определённый прогресс (70 %)",
+    "en": "Determinate progress (70%)"
+  },
+  "CtrlIndeterminateProgress": {
+    "ru": "Неопределённый прогресс",
+    "en": "Indeterminate progress"
+  },
+  "CtrlDisabledProgress": {
+    "ru": "Отключённый (40 %)",
+    "en": "Disabled (40%)"
+  },
+  "CtrlSimpleTooltipButton": {
+    "ru": "Простая подсказка",
+    "en": "Simple tooltip"
+  },
+  "CtrlSimpleTooltip": {
+    "ru": "Это обычная всплывающая подсказка",
+    "en": "This is a regular tooltip"
+  },
+  "CtrlTooltipWithHeaderButton": {
+    "ru": "Подсказка с заголовком",
+    "en": "Tooltip with a header"
+  },
+  "CtrlTooltipHeader": {
+    "ru": "Заголовок подсказки",
+    "en": "Tooltip header"
+  },
+  "CtrlTooltipDetails": {
+    "ru": "Дополнительное пояснение к элементу",
+    "en": "Additional explanation of the element"
+  },
+  "CtrlDisabledTooltip": {
+    "ru": "Подсказка у отключённого элемента",
+    "en": "Tooltip on a disabled element"
+  },
+  "CtrlMenu": {
+    "ru": "Меню",
+    "en": "Menu"
+  },
+  "CtrlFile": {
+    "ru": "Файл",
+    "en": "File"
+  },
+  "CtrlOpen": {
+    "ru": "Открыть",
+    "en": "Open"
+  },
+  "CtrlAutosave": {
+    "ru": "Автосохранение",
+    "en": "Autosave"
+  },
+  "CtrlUnavailableItem": {
+    "ru": "Недоступный пункт",
+    "en": "Unavailable item"
+  },
+  "CtrlEdit": {
+    "ru": "Правка",
+    "en": "Edit"
+  },
+  "CtrlView": {
+    "ru": "Вид",
+    "en": "View"
+  },
+  "CtrlZoom": {
+    "ru": "Масштаб",
+    "en": "Zoom"
+  },
+  "CtrlContextMenuHint": {
+    "ru": "Контекстное меню (правая кнопка мыши по области)",
+    "en": "Context menu (right-click the area)"
+  },
+  "CtrlRightClickHere": {
+    "ru": "Нажмите здесь правой кнопкой мыши",
+    "en": "Right-click here"
+  },
+  "CtrlMore": {
+    "ru": "Дополнительно",
+    "en": "More"
+  },
+  "CtrlProperties": {
+    "ru": "Свойства",
+    "en": "Properties"
+  },
+  "CtrlOptions": {
+    "ru": "Параметры",
+    "en": "Options"
+  },
+  "LayoutStackVertical": {
+    "ru": "StackPanel (вертикальный)",
+    "en": "StackPanel (vertical)"
+  },
+  "LayoutStackVerticalHint": {
+    "ru": "Элементы идут друг за другом сверху вниз",
+    "en": "Elements are placed one after another from top to bottom"
+  },
+  "LayoutStackHorizontal": {
+    "ru": "StackPanel (горизонтальный)",
+    "en": "StackPanel (horizontal)"
+  },
+  "LayoutStackHorizontalHint": {
+    "ru": "Элементы идут друг за другом слева направо",
+    "en": "Elements are placed one after another from left to right"
+  },
+  "LayoutWrapPanelHint": {
+    "ru": "Элементы переносятся на новую строку",
+    "en": "Elements wrap to a new line"
+  },
+  "LayoutDockPanelHint": {
+    "ru": "Элементы прижимаются к краям, последний занимает остаток",
+    "en": "Elements dock to the edges; the last one fills the remaining space"
+  },
+  "LayoutGridHint": {
+    "ru": "Строки и столбцы: Auto, * и 2*, объединение ячеек",
+    "en": "Rows and columns: Auto, * and 2*, merged cells"
+  },
+  "LayoutRowSpan": {
+    "ru": "RowSpan: строка 2*",
+    "en": "RowSpan: row 2*"
+  },
+  "LayoutUniformHint": {
+    "ru": "Все ячейки одинакового размера (3 × 2)",
+    "en": "All cells have the same size (3 × 2)"
+  },
+  "LayoutCanvasHint": {
+    "ru": "Абсолютные координаты Left / Top",
+    "en": "Absolute Left / Top coordinates"
+  },
+  "LayoutBorderAlignment": {
+    "ru": "Border и выравнивание",
+    "en": "Border and alignment"
+  },
+  "LayoutAlignmentHint": {
+    "ru": "HorizontalAlignment / VerticalAlignment внутри Grid",
+    "en": "HorizontalAlignment / VerticalAlignment inside Grid"
+  },
+  "BindOneWay": {
+    "ru": "OneWay — источник → приёмник. Часы обновляет таймер модели:",
+    "en": "OneWay — source → target. The clock is updated by the model timer:"
+  },
+  "BindOneTime": {
+    "ru": "OneTime — значение читается один раз при создании привязки (часы «замерли»):",
+    "en": "OneTime — the value is read once when the binding is created (the clock is frozen):"
+  },
+  "BindTwoWay": {
+    "ru": "TwoWay — два поля одного свойства; правка в любом отражается в другом:",
+    "en": "TwoWay — two fields bound to one property; editing either updates the other:"
+  },
+  "BindOneWayToSource": {
+    "ru": "OneWayToSource — поле только пишет в источник (при создании очищает его):",
+    "en": "OneWayToSource — the field only writes to the source (clears it when created):"
+  },
+  "BindSinkFormat": {
+    "ru": "В источнике: {0}",
+    "en": "In the source: {0}"
+  },
+  "BindDefault": {
+    "ru": "Default — у TextBox.Text по умолчанию TwoWay, у TextBlock.Text — OneWay:",
+    "en": "Default — TextBox.Text is TwoWay by default, TextBlock.Text is OneWay:"
+  },
+  "BindChangeFromCode": {
+    "ru": "Изменить значения из модели (источник → приёмник)",
+    "en": "Change values from the model (source → target)"
+  },
+  "BindTriggerDefault": {
+    "ru": "Default (для Text — LostFocus)",
+    "en": "Default (Text uses LostFocus)"
+  },
+  "BindTriggerExplicit": {
+    "ru": "Explicit (по кнопке)",
+    "en": "Explicit (via button)"
+  },
+  "BindApply": {
+    "ru": "Применить",
+    "en": "Apply"
+  },
+  "BindDataContext": {
+    "ru": "DataContext (по умолчанию) — все привязки выше берут данные из BindingsViewModel.",
+    "en": "DataContext (default) — all bindings above read data from BindingsViewModel."
+  },
+  "BindElementName": {
+    "ru": "ElementName — привязка к другому элементу: ползунок управляет числом и индикатором:",
+    "en": "ElementName — binding to another element: the slider controls the number and the indicator:"
+  },
+  "BindRelativeSelf": {
+    "ru": "RelativeSource Self — свойство самого элемента:",
+    "en": "RelativeSource Self — a property of the element itself:"
+  },
+  "BindSelfWidthFormat": {
+    "ru": "Ширина этого TextBlock: {0:0} px",
+    "en": "Width of this TextBlock: {0:0} px"
+  },
+  "BindRelativeAncestor": {
+    "ru": "RelativeSource FindAncestor — свойство родителя заданного типа (GroupBox):",
+    "en": "RelativeSource FindAncestor — a property of an ancestor of the specified type (GroupBox):"
+  },
+  "BindAncestorWidthFormat": {
+    "ru": "Ширина внешнего GroupBox: {0:0} px",
+    "en": "Width of the outer GroupBox: {0:0} px"
+  },
+  "BindSource": {
+    "ru": "Source — произвольный объект (здесь Loc.Instance из библиотеки CodingSeb.Localization):",
+    "en": "Source — an arbitrary object (here Loc.Instance from CodingSeb.Localization):"
+  },
+  "BindCurrentLanguageFormat": {
+    "ru": "Текущий язык: {0}",
+    "en": "Current language: {0}"
+  },
+  "BindTemplatedParent": {
+    "ru": "TemplatedParent — используется в шаблонах кнопок библиотеки ресурсов (цвет берётся у элемента, к которому применён шаблон).",
+    "en": "TemplatedParent — used in the resource library button templates (the color comes from the element the template is applied to)."
+  },
+  "BindConverterParam": {
+    "ru": "Converter + ConverterParameter: значение ползунка → «40 %» и цвет роли (ошибка / информация / успех):",
+    "en": "Converter + ConverterParameter: slider value → “40%” and the role color (error / info / success):"
+  },
+  "BindBoolToVis": {
+    "ru": "BooleanToVisibilityConverter: флажок показывает и скрывает текст:",
+    "en": "BooleanToVisibilityConverter: the checkbox shows and hides the text:"
+  },
+  "BindShowDetails": {
+    "ru": "Показать подробности",
+    "en": "Show details"
+  },
+  "BindDetailsText": {
+    "ru": "Подробности отображаются, пока флажок установлен.",
+    "en": "Details are shown while the checkbox is checked."
+  },
+  "BindMulti": {
+    "ru": "MultiBinding + IMultiValueConverter и MultiBinding + StringFormat:",
+    "en": "MultiBinding + IMultiValueConverter and MultiBinding + StringFormat:"
+  },
+  "BindFullNameFormat": {
+    "ru": "Имя: {1}, фамилия: {0}",
+    "en": "First name: {1}, last name: {0}"
+  },
+  "BindNullFallback": {
+    "ru": "TargetNullValue (источник вернул null) и FallbackValue (путь не найден):",
+    "en": "TargetNullValue (source returned null) and FallbackValue (path not found):"
+  },
+  "BindNullValue": {
+    "ru": "(значение не задано)",
+    "en": "(value not set)"
+  },
+  "BindFallbackValue": {
+    "ru": "(свойство не найдено)",
+    "en": "(property not found)"
+  },
+  "BindNotifyHint": {
+    "ru": "Оба счётчика увеличиваются одной командой. Интерфейс видит только тот, что уведомляет об изменении:",
+    "en": "Both counters are incremented by one command. The UI only sees the one that raises change notifications:"
+  },
+  "BindPlainFormat": {
+    "ru": "Plain.Value (без уведомлений): {0}",
+    "en": "Plain.Value (no notifications): {0}"
+  },
+  "BindCounterFormat": {
+    "ru": "Счётчик (INotifyPropertyChanged): {0}",
+    "en": "Counter (INotifyPropertyChanged): {0}"
+  },
+  "BindIncrement": {
+    "ru": "Увеличить",
+    "en": "Increment"
+  },
+  "BindRefresh": {
+    "ru": "Перечитать привязку (UpdateTarget)",
+    "en": "Refresh binding (UpdateTarget)"
+  },
+  "BindValidationHint": {
+    "ru": "ValidatesOnExceptions: исключение в set-методе Age или ошибка преобразования показываются как ошибка ввода. Введите, например, 200 или «abc»:",
+    "en": "ValidatesOnExceptions: an exception in the Age setter or a conversion error is shown as an input error. Try 200 or “abc”:"
+  },
+  "BindValidationAge": {
+    "ru": "Возраст должен быть от 0 до 150.",
+    "en": "Age must be between 0 and 150."
+  },
+  "BindSharedText": {
+    "ru": "Общий текст",
+    "en": "Shared text"
+  },
+  "BindSink": {
+    "ru": "Значение источника",
+    "en": "Source value"
+  },
+  "BindDefaultMode": {
+    "ru": "Режим по умолчанию",
+    "en": "Default mode"
+  },
+  "BindHello": {
+    "ru": "Привет",
+    "en": "Hello"
+  },
+  "BindFirstName": {
+    "ru": "Иван",
+    "en": "John"
+  },
+  "BindLastName": {
+    "ru": "Иванов",
+    "en": "Doe"
+  },
+  "BindFromModel": {
+    "ru": "Из модели",
+    "en": "From model"
+  },
+  "BindChangedFromModelFormat": {
+    "ru": "Изменено из модели в {0:HH:mm:ss}",
+    "en": "Changed from the model at {0:HH:mm:ss}"
   }
 }

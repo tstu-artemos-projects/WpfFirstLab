@@ -1,46 +1,47 @@
 <UserControl x:Class="WpfFirstLab.ControlsTabView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:WpfFirstLab"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:loc="clr-namespace:CodingSeb.Localization;assembly=CodingSeb.Localization"
+              xmlns:local="clr-namespace:WpfFirstLab"
              xmlns:res="clr-namespace:WpfFirstLab.Resources;assembly=WpfFirstLab.Resources">
     <UserControl.Resources>
         <DataTemplate x:Key="ButtonsTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
-                    <TextBlock Text="Обычные кнопки: основная, вторичная, третичная (наведение и нажатие — мышью)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlButtonsHint'}" Style="{StaticResource Caption}"/>
                     <WrapPanel>
-                        <Button Style="{StaticResource PrimaryButton}" Content="Основная"/>
-                        <Button Style="{StaticResource SecondaryButton}" Content="Вторичная"/>
-                        <Button Style="{StaticResource TertiaryButton}" Content="Третичная"/>
-                        <Button Style="{StaticResource PrimaryButton}" Content="Отключена" IsEnabled="False"/>
-                        <Button Style="{StaticResource SecondaryButton}" Content="Отключена" IsEnabled="False"/>
-                        <Button Style="{StaticResource TertiaryButton}" Content="Отключена" IsEnabled="False"/>
+                        <Button Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlPrimary'}"/>
+                        <Button Style="{StaticResource SecondaryButton}" Content="{Tr 'CtrlSecondary'}"/>
+                        <Button Style="{StaticResource TertiaryButton}" Content="{Tr 'CtrlTertiary'}"/>
+                        <Button Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlDisabledButton'}" IsEnabled="False"/>
+                        <Button Style="{StaticResource SecondaryButton}" Content="{Tr 'CtrlDisabledButton'}" IsEnabled="False"/>
+                        <Button Style="{StaticResource TertiaryButton}" Content="{Tr 'CtrlDisabledButton'}" IsEnabled="False"/>
                     </WrapPanel>
 
-                    <TextBlock Text="Кнопки-пиктограммы (шрифт Segoe MDL2 Assets)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlIconButtonsHint'}" Style="{StaticResource Caption}"/>
                     <WrapPanel>
                         <Button Style="{StaticResource PrimaryButton}" FontFamily="Segoe MDL2 Assets" FontSize="16"
-                                Padding="9" Content="&#xE710;" ToolTip="Добавить"/>
+                                Padding="9" Content="&#xE710;" ToolTip="{Tr 'Add'}"/>
                         <Button Style="{StaticResource SecondaryButton}" FontFamily="Segoe MDL2 Assets" FontSize="16"
-                                Padding="9" Content="&#xE70F;" ToolTip="Изменить"/>
+                                Padding="9" Content="&#xE70F;" ToolTip="{Tr 'Update'}"/>
                         <Button Style="{StaticResource TertiaryButton}" FontFamily="Segoe MDL2 Assets" FontSize="16"
-                                Padding="9" Content="&#xE74D;" ToolTip="Удалить"/>
+                                Padding="9" Content="&#xE74D;" ToolTip="{Tr 'Delete'}"/>
                         <Button Style="{StaticResource PrimaryButton}" FontFamily="Segoe MDL2 Assets" FontSize="16"
                                 Padding="9" Content="&#xE713;" IsEnabled="False"/>
                         <Button Style="{StaticResource SecondaryButton}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE74E;" Margin="0,0,8,0"/>
-                                <TextBlock Text="Сохранить"/>
+                                <TextBlock Text="{Tr 'CtrlSave'}"/>
                             </StackPanel>
                         </Button>
                     </WrapPanel>
 
-                    <TextBlock Text="Переключатели: кнопка-переключатель и тумблер (выключен, включён, отключён)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlTogglesHint'}" Style="{StaticResource Caption}"/>
                     <WrapPanel>
-                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="Включить"/>
-                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="Включено" IsChecked="True"/>
-                        <ToggleButton Style="{StaticResource SecondaryButton}" Content="Включено" IsChecked="True"/>
-                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="Отключён" IsEnabled="False"/>
+                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlTurnOn'}"/>
+                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlOn'}" IsChecked="True"/>
+                        <ToggleButton Style="{StaticResource SecondaryButton}" Content="{Tr 'CtrlOn'}" IsChecked="True"/>
+                        <ToggleButton Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlDisabled'}" IsEnabled="False"/>
                         <ToggleButton Style="{StaticResource SwitchToggle}"/>
                         <ToggleButton Style="{StaticResource SwitchToggle}" IsChecked="True"/>
                         <ToggleButton Style="{StaticResource SwitchToggle}" IsChecked="True" IsEnabled="False"/>
@@ -59,48 +60,51 @@
                     </Grid.ColumnDefinitions>
 
                     <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                        <TextBlock Text="ListBox (выбран, отключён элемент)" Style="{StaticResource Caption}"/>
+                        <TextBlock Text="{Tr 'CtrlListBoxHint'}" Style="{StaticResource Caption}"/>
                         <ListBox Style="{StaticResource ColorListBox}" Height="110" SelectedIndex="1">
-                            <ListBoxItem Content="Первый элемент"/>
-                            <ListBoxItem Content="Второй элемент"/>
-                            <ListBoxItem Content="Третий элемент"/>
-                            <ListBoxItem Content="Недоступный" IsEnabled="False"/>
+                            <ListBoxItem Content="{Tr 'CtrlFirstItem'}"/>
+                            <ListBoxItem Content="{Tr 'CtrlSecondItem'}"/>
+                            <ListBoxItem Content="{Tr 'CtrlThirdItem'}"/>
+                            <ListBoxItem Content="{Tr 'CtrlUnavailable'}" IsEnabled="False"/>
                         </ListBox>
-                        <TextBlock Text="ComboBox (обычный, отключён)" Style="{StaticResource Caption}"/>
+                        <TextBlock Text="{Tr 'CtrlComboBoxHint'}" Style="{StaticResource Caption}"/>
                         <Border BorderBrush="{Binding Brush}" BorderThickness="1.5" CornerRadius="6" Padding="1" Margin="0,0,0,6">
                             <ComboBox SelectedIndex="0">
-                                <ComboBoxItem Content="Вариант 1"/>
-                                <ComboBoxItem Content="Вариант 2"/>
-                                <ComboBoxItem Content="Вариант 3"/>
+                                <ComboBoxItem Content="{Tr 'CtrlOption1'}"/>
+                                <ComboBoxItem Content="{Tr 'CtrlOption2'}"/>
+                                <ComboBoxItem Content="{Tr 'CtrlOption3'}"/>
                             </ComboBox>
                         </Border>
                         <Border BorderBrush="{Binding Brush}" BorderThickness="1.5" CornerRadius="6" Padding="1" Opacity="0.5">
                             <ComboBox SelectedIndex="0" IsEnabled="False">
-                                <ComboBoxItem Content="Отключён"/>
+                                <ComboBoxItem Content="{Tr 'CtrlDisabled'}"/>
                             </ComboBox>
                         </Border>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1" Margin="0,0,10,0">
-                        <TextBlock Text="TextBox (обычный, только чтение, отключён)" Style="{StaticResource Caption}"/>
-                        <TextBox Style="{StaticResource ColorTextBox}" Text="Введите текст"/>
-                        <TextBox Style="{StaticResource ColorTextBox}" Text="Только чтение" IsReadOnly="True"/>
-                        <TextBox Style="{StaticResource ColorTextBox}" Text="Отключён" IsEnabled="False"/>
-                        <TextBlock Text="PasswordBox (обычный, отключён)" Style="{StaticResource Caption}"/>
+                        <TextBlock Text="{Tr 'CtrlTextBoxHint'}" Style="{StaticResource Caption}"/>
+                        <TextBox Style="{StaticResource ColorTextBox}"
+                                 Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=CtrlEnterText}"/>
+                        <TextBox Style="{StaticResource ColorTextBox}" IsReadOnly="True"
+                                 Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=CtrlReadOnly}"/>
+                        <TextBox Style="{StaticResource ColorTextBox}" IsEnabled="False"
+                                 Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=CtrlDisabled}"/>
+                        <TextBlock Text="{Tr 'CtrlPasswordHint'}" Style="{StaticResource Caption}"/>
                         <PasswordBox Style="{StaticResource ColorPasswordBox}" Password="12345678"/>
                         <PasswordBox Style="{StaticResource ColorPasswordBox}" Password="12345678" IsEnabled="False"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="2">
-                        <TextBlock Text="RichTextBox (обычный, отключён)" Style="{StaticResource Caption}"/>
+                        <TextBlock Text="{Tr 'CtrlRichHint'}" Style="{StaticResource Caption}"/>
                         <RichTextBox Style="{StaticResource ColorRichTextBox}" Height="90" Margin="0,0,0,8">
                             <FlowDocument>
-                                <Paragraph>Обычный, <Bold>жирный</Bold>, <Italic>курсивный</Italic> и <Underline>подчёркнутый</Underline> текст.</Paragraph>
+                                <Paragraph><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichNormalPrefix}"/><Bold><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichBold}"/></Bold>,<Italic><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichItalic}"/></Italic><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichAnd}"/><Underline><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichUnderline}"/></Underline><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichSuffix}"/></Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                         <RichTextBox Style="{StaticResource ColorRichTextBox}" Height="60" IsEnabled="False">
                             <FlowDocument>
-                                <Paragraph>Отключённое поле.</Paragraph>
+                                <Paragraph><Run Text="{Binding CurrentLanguage, Source={x:Static loc:Loc.Instance}, Mode=OneWay, Converter={StaticResource LocalizedText}, ConverterParameter=RichDisabled}"/></Paragraph>
                             </FlowDocument>
                         </RichTextBox>
                     </StackPanel>
@@ -118,20 +122,20 @@
 
                     <StackPanel Grid.Column="0">
                         <TextBlock Text="TextBlock" Style="{StaticResource Caption}"/>
-                        <TextBlock Text="Заголовок 1" Style="{StaticResource H1}"/>
-                        <TextBlock Text="Заголовок 2" Style="{StaticResource H2}"/>
-                        <TextBlock Text="Заголовок 3" Style="{StaticResource H3}"/>
-                        <TextBlock Text="Обычный текст абзаца." Style="{StaticResource BodyText}"/>
-                        <TextBlock Text="Подпись к элементу" Style="{StaticResource Caption}"/>
+                        <TextBlock Text="{Tr 'CtrlHeading1'}" Style="{StaticResource H1}"/>
+                        <TextBlock Text="{Tr 'CtrlHeading2'}" Style="{StaticResource H2}"/>
+                        <TextBlock Text="{Tr 'CtrlHeading3'}" Style="{StaticResource H3}"/>
+                        <TextBlock Text="{Tr 'CtrlBody'}" Style="{StaticResource BodyText}"/>
+                        <TextBlock Text="{Tr 'CtrlCaption'}" Style="{StaticResource Caption}"/>
                     </StackPanel>
 
                     <StackPanel Grid.Column="1">
                         <TextBlock Text="Label" Style="{StaticResource Caption}"/>
-                        <Label Content="Заголовок 1" FontSize="28" FontWeight="Bold" Foreground="{Binding Brush}" Padding="0"/>
-                        <Label Content="Заголовок 2" FontSize="22" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
-                        <Label Content="Заголовок 3" FontSize="18" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
-                        <Label Content="Обычный текст абзаца." FontSize="14" Padding="0,2"/>
-                        <Label Content="Подпись к элементу" FontSize="12" Foreground="{DynamicResource MutedBrush}" Padding="0"/>
+                        <Label Content="{Tr 'CtrlHeading1'}" FontSize="28" FontWeight="Bold" Foreground="{Binding Brush}" Padding="0"/>
+                        <Label Content="{Tr 'CtrlHeading2'}" FontSize="22" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
+                        <Label Content="{Tr 'CtrlHeading3'}" FontSize="18" FontWeight="SemiBold" Foreground="{Binding Brush}" Padding="0"/>
+                        <Label Content="{Tr 'CtrlBody'}" FontSize="14" Padding="0,2"/>
+                        <Label Content="{Tr 'CtrlCaption'}" FontSize="12" Foreground="{DynamicResource MutedBrush}" Padding="0"/>
                     </StackPanel>
                 </Grid>
             </GroupBox>
@@ -141,21 +145,21 @@
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
                     <TreeView Style="{StaticResource ColorTreeView}" Width="260" Height="150" Margin="0,0,12,0">
-                        <TreeViewItem Header="Проект" IsExpanded="True">
-                            <TreeViewItem Header="Модели" IsExpanded="True">
+                        <TreeViewItem Header="{Tr 'CtrlProject'}" IsExpanded="True">
+                            <TreeViewItem Header="{Tr 'CtrlModels'}" IsExpanded="True">
                                 <TreeViewItem Header="Student.cs" IsSelected="True"/>
                                 <TreeViewItem Header="Palette.cs"/>
                             </TreeViewItem>
-                            <TreeViewItem Header="Представления">
+                            <TreeViewItem Header="{Tr 'CtrlViews'}">
                                 <TreeViewItem Header="MainWindow.xaml"/>
                             </TreeViewItem>
-                            <TreeViewItem Header="Недоступный узел" IsEnabled="False"/>
+                            <TreeViewItem Header="{Tr 'CtrlUnavailableNode'}" IsEnabled="False"/>
                         </TreeViewItem>
                     </TreeView>
                     <TreeView Style="{StaticResource ColorTreeView}" Width="260" Height="150" IsEnabled="False" Opacity="0.6">
-                        <TreeViewItem Header="Отключённое дерево" IsExpanded="True">
-                            <TreeViewItem Header="Узел 1"/>
-                            <TreeViewItem Header="Узел 2"/>
+                        <TreeViewItem Header="{Tr 'CtrlDisabledTree'}" IsExpanded="True">
+                            <TreeViewItem Header="{Tr 'CtrlNode1'}"/>
+                            <TreeViewItem Header="{Tr 'CtrlNode2'}"/>
                         </TreeViewItem>
                     </TreeView>
                 </WrapPanel>
@@ -180,11 +184,11 @@
         <DataTemplate x:Key="ProgressTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
-                    <TextBlock Text="Определённый прогресс (70 %)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlDeterminateProgress'}" Style="{StaticResource Caption}"/>
                     <ProgressBar Style="{StaticResource ColorProgressBar}" Value="70" Maximum="100"/>
-                    <TextBlock Text="Неопределённый прогресс" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlIndeterminateProgress'}" Style="{StaticResource Caption}"/>
                     <ProgressBar Style="{StaticResource ColorProgressBar}" IsIndeterminate="True"/>
-                    <TextBlock Text="Отключённый (40 %)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlDisabledProgress'}" Style="{StaticResource Caption}"/>
                     <ProgressBar Style="{StaticResource ColorProgressBar}" Value="40" Maximum="100" IsEnabled="False" Opacity="0.5"/>
                 </StackPanel>
             </GroupBox>
@@ -193,25 +197,25 @@
         <DataTemplate x:Key="ToolTipsTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <WrapPanel>
-                    <Button Style="{StaticResource PrimaryButton}" Content="Простая подсказка">
+                    <Button Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlSimpleTooltipButton'}">
                         <Button.ToolTip>
-                            <ToolTip Style="{StaticResource ColorToolTip}" Content="Это обычная всплывающая подсказка"/>
+                            <ToolTip Style="{StaticResource ColorToolTip}" Content="{Tr 'CtrlSimpleTooltip'}"/>
                         </Button.ToolTip>
                     </Button>
-                    <Button Style="{StaticResource SecondaryButton}" Content="Подсказка с заголовком">
+                    <Button Style="{StaticResource SecondaryButton}" Content="{Tr 'CtrlTooltipWithHeaderButton'}">
                         <Button.ToolTip>
                             <ToolTip Style="{StaticResource ColorToolTip}">
                                 <StackPanel>
-                                    <TextBlock Text="Заголовок подсказки" FontWeight="Bold"/>
-                                    <TextBlock Text="Дополнительное пояснение к элементу"/>
+                                    <TextBlock Text="{Tr 'CtrlTooltipHeader'}" FontWeight="Bold"/>
+                                    <TextBlock Text="{Tr 'CtrlTooltipDetails'}"/>
                                 </StackPanel>
                             </ToolTip>
                         </Button.ToolTip>
                     </Button>
-                    <Button Style="{StaticResource PrimaryButton}" Content="Отключена" IsEnabled="False"
+                    <Button Style="{StaticResource PrimaryButton}" Content="{Tr 'CtrlDisabledButton'}" IsEnabled="False"
                             ToolTipService.ShowOnDisabled="True">
                         <Button.ToolTip>
-                            <ToolTip Style="{StaticResource ColorToolTip}" Content="Подсказка у отключённого элемента"/>
+                            <ToolTip Style="{StaticResource ColorToolTip}" Content="{Tr 'CtrlDisabledTooltip'}"/>
                         </Button.ToolTip>
                     </Button>
                 </WrapPanel>
@@ -221,40 +225,40 @@
         <DataTemplate x:Key="MenusTemplate">
             <GroupBox Header="{Binding Title}" Padding="8" Margin="0,0,0,8" res:Ui.Brush="{Binding Brush}">
                 <StackPanel>
-                    <TextBlock Text="Меню" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlMenu'}" Style="{StaticResource Caption}"/>
                     <Menu Background="{Binding LightBrush}" Foreground="{Binding DarkBrush}" Margin="0,0,0,8">
-                        <MenuItem Header="Файл">
-                            <MenuItem Header="Открыть" InputGestureText="Ctrl+O"/>
-                            <MenuItem Header="Автосохранение" IsCheckable="True" IsChecked="True"/>
+                        <MenuItem Header="{Tr 'CtrlFile'}">
+                            <MenuItem Header="{Tr 'CtrlOpen'}" InputGestureText="Ctrl+O"/>
+                            <MenuItem Header="{Tr 'CtrlAutosave'}" IsCheckable="True" IsChecked="True"/>
                             <Separator/>
-                            <MenuItem Header="Недоступный пункт" IsEnabled="False"/>
+                            <MenuItem Header="{Tr 'CtrlUnavailableItem'}" IsEnabled="False"/>
                         </MenuItem>
-                        <MenuItem Header="Правка">
-                            <MenuItem Header="Копировать"/>
-                            <MenuItem Header="Вставить"/>
+                        <MenuItem Header="{Tr 'CtrlEdit'}">
+                            <MenuItem Header="{Tr 'Copy'}"/>
+                            <MenuItem Header="{Tr 'Paste'}"/>
                         </MenuItem>
-                        <MenuItem Header="Вид">
-                            <MenuItem Header="Масштаб">
+                        <MenuItem Header="{Tr 'CtrlView'}">
+                            <MenuItem Header="{Tr 'CtrlZoom'}">
                                 <MenuItem Header="100 %"/>
                                 <MenuItem Header="150 %"/>
                             </MenuItem>
                         </MenuItem>
                     </Menu>
 
-                    <TextBlock Text="Контекстное меню (правая кнопка мыши по области)" Style="{StaticResource Caption}"/>
+                    <TextBlock Text="{Tr 'CtrlContextMenuHint'}" Style="{StaticResource Caption}"/>
                     <Border Background="{Binding LightBrush}" BorderBrush="{Binding Brush}"
                             BorderThickness="1" CornerRadius="6" Padding="12">
-                        <TextBlock Text="Нажмите здесь правой кнопкой мыши" Foreground="{Binding DarkBrush}"/>
+                        <TextBlock Text="{Tr 'CtrlRightClickHere'}" Foreground="{Binding DarkBrush}"/>
                         <Border.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Копировать"/>
-                                <MenuItem Header="Вставить"/>
+                                <MenuItem Header="{Tr 'Copy'}"/>
+                                <MenuItem Header="{Tr 'Paste'}"/>
                                 <Separator/>
-                                <MenuItem Header="Дополнительно">
-                                    <MenuItem Header="Свойства"/>
-                                    <MenuItem Header="Параметры"/>
+                                <MenuItem Header="{Tr 'CtrlMore'}">
+                                    <MenuItem Header="{Tr 'CtrlProperties'}"/>
+                                    <MenuItem Header="{Tr 'CtrlOptions'}"/>
                                 </MenuItem>
-                                <MenuItem Header="Недоступный пункт" IsEnabled="False"/>
+                                <MenuItem Header="{Tr 'CtrlUnavailableItem'}" IsEnabled="False"/>
                             </ContextMenu>
                         </Border.ContextMenu>
                     </Border>

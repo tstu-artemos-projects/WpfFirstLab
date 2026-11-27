@@ -55,13 +55,13 @@ public sealed class BindingsViewModel : ViewModelBase
     {
         get;
         set => SetProperty(ref field, value);
-    } = "Значение источника";
+    } = Loc.Tr("BindSink", "Значение источника");
 
     public string DefaultModeText
     {
         get;
         set => SetProperty(ref field, value);
-    } = "Режим по умолчанию";
+    } = Loc.Tr("BindDefaultMode", "Режим по умолчанию");
 
     public string PropertyChangedText
     {
@@ -97,13 +97,13 @@ public sealed class BindingsViewModel : ViewModelBase
     {
         get;
         set => SetProperty(ref field, value);
-    } = "Иван";
+    } = Loc.Tr("BindFirstName", "Иван");
 
     public string LastName
     {
         get;
         set => SetProperty(ref field, value);
-    } = "Иванов";
+    } = Loc.Tr("BindLastName", "Иванов");
 
     public bool ShowDetails
     {
@@ -127,11 +127,21 @@ public sealed class BindingsViewModel : ViewModelBase
         set
         {
             if (value is < 0 or > 150)
-                throw new ArgumentOutOfRangeException(nameof(value), "Возраст должен быть от 0 до 150.");
+                throw new ArgumentOutOfRangeException(nameof(value), Loc.Tr("BindValidationAge", "Возраст должен быть от 0 до 150."));
             SetProperty(ref field, value);
         }
     } = 20;
 
     public ICommand ChangeFromCodeCommand { get; }
     public ICommand IncrementCommand { get; }
+
+    private void Refresh()
+    {
+        SharedText = Loc.Tr("BindSharedText", "Общий текст");
+        Sink = Loc.Tr("BindSink", "Значение источника");
+        DefaultModeText = Loc.Tr("BindDefaultMode", "Режим по умолчанию");
+        PropertyChangedText = LostFocusText = ExplicitText = DefaultTriggerText = DelayedText = Loc.Tr("BindHello", "Привет");
+        FirstName = Loc.Tr("BindFirstName", "Иван");
+        LastName = Loc.Tr("BindLastName", "Иванов");
+    }
 }

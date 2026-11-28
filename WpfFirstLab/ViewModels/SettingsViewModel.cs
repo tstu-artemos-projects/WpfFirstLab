@@ -30,17 +30,17 @@ public sealed class SettingsViewModel : ViewModelBase
     {
         _themeService = themeService;
 
-        Themes = new[]
-        {
-            new LocalizedItem<AppTheme>(AppTheme.Light, "ThemeLight"),
-            new LocalizedItem<AppTheme>(AppTheme.Dark, "ThemeDark"),
+        Themes =
+        [
             new LocalizedItem<AppTheme>(AppTheme.System, "ThemeSystem"),
-        };
-        Languages = new[]
-        {
+            new LocalizedItem<AppTheme>(AppTheme.Light, "ThemeLight"),
+            new LocalizedItem<AppTheme>(AppTheme.Dark, "ThemeDark")
+        ];
+        Languages =
+        [
             new LanguageOption("ru", "Русский"),
-            new LanguageOption("en", "English"),
-        };
+            new LanguageOption("en", "English")
+        ];
         Fonts = new[] { "Segoe UI", "Arial", "Times New Roman", "Consolas", "Calibri" };
 
         _selectedTheme = Themes[0];
